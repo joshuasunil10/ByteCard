@@ -37,6 +37,13 @@ app.get("/login", (req, res) => {
     res.render("login");
 });
 
+
+// Define the root route for login
+app.get("/home", (req, res) => {
+    res.render("home");
+});
+
+
 // Define the signup route
 app.get("/register", (req, res) => {
     res.render("register");
@@ -46,7 +53,11 @@ app.get("/dashboard", (req, res) => {
     res.render("dashboard");
 });
 
-const port = 3000;
+app.get("/cardcreator", (req, res) => {
+    res.render("cardcreator");
+});
+
+const port = 5050;
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

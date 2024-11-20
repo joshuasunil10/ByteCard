@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" 1  href="/css/dashboard.css">
     <title>Dashboard | ByteCard</title>
 </head>
 <body>
-    <div class="container">
-        <h2>Welcome to your Dashboard</h2>
-        <p>Here you can view your profile, add a new card, and view all your cards.</p>
-        <a href="/add-card" class="btn">Add a new Card</a>
-        <a href="/cards" class="btn">View all Cards</a>
-        <a href="/logout" class="btn">Logout</a>
+    <nav>
+        <div class="navbar">
+            <a href="/home" class="brand">ByteCard</a>
+            <ul class="nav-links">
+                <a class="links" href="/discover">Discover</a>
+                <a class="links" href="/logout">Logout</a>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="welcome-box">
+        <h1>Welcome, [User's Name]!</h1>
+        <p>Here you can create your very own ByteCard and share to your friends!</p>
+        <a href="/cardcreator"><button class="Btn" href="/cardcreator"></button></a>
     </div>
 </body>
 </html>
