@@ -5,10 +5,11 @@ const { Client } = require("pg");
 
 // Initialize Express app
 const app = express();
-
+app.use(express.static(path.join(__dirname, "../public")));
 // Middleware for parsing JSON and form data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set("views", path.join(__dirname, "../views")); // Moves up one level to locate "views"
 
 // Set EJS as the template engine
 app.set("view engine", "ejs");
@@ -52,6 +53,17 @@ app.get("/dashboard", (req, res) => {
 
 app.get("/cardcreator", (req, res) => {
   res.render("cardcreator");
+});
+
+app.get("/search", (req, res) => {
+  //temp data to test search display
+  const results = [
+    { name: "John Doe", position: "Software Engineer", company: "Tech Corp" },
+    { name: "Jane Smith", position: "Product Manager", company: "Innovate Inc" },
+  ];
+
+  // Pass results to the EJS template
+  res.render("search", { results });
 });
 
 // User Registration Route
