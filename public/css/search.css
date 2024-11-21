@@ -1,13 +1,11 @@
-/* General Reset */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background-color: #3a3a3a; /* Dark background */
-  color: #f5f5f5; /* Light text color */
+  background-color: #3a3a3a;
+  color: #f5f5f5;
 }
 
-/* Header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -38,7 +36,6 @@ body {
   text-decoration: underline;
 }
 
-/* Container */
 .container {
   max-width: 90%;
   margin: 0 auto;
@@ -48,7 +45,6 @@ body {
   align-items: center;
 }
 
-/* Search Text */
 .search_text {
   background-color: #444;
   color: #fdfd54;
@@ -61,7 +57,6 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Search Input */
 .search-input {
   width: 100%;
   padding: 0.8rem;
@@ -74,73 +69,68 @@ body {
 .search-input::placeholder {
   color: #aaa;
 }
-/* Search Button */
+
 .btn {
-  align-self: center; /* Center the button horizontally */
+  align-self: center;
   display: inline-block;
-  background-color: #fdfd54; /* Bright yellow background */
-  color: #000; /* Black text color */
-  border: none; /* Remove border */
-  border-radius: 20px; /* Rounded corners */
-  padding: 10px 20px; /* Padding for size */
-  font-size: 1.5rem; /* Large font size for "+" */
-  font-weight: bold; /* Bold text */
-  text-align: center; /* Center text */
-  cursor: pointer; /* Pointer cursor on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effects */
+  background-color: #fdfd54;
+  color: #000;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .btn:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .btn:active {
-  transform: scale(0.95); /* Slightly shrink on click */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Less shadow */
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Center Input and Button */
 form {
-  display: flex; /* Use Flexbox for alignment */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  gap: 1rem; /* Space between input and button */
-  width: 100%; /* Ensure full width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
 }
 
-/* Results Container */
 .results-container {
-  width: 70%; /* Results box occupies 70% of screen width */
-  background-color: #3b3b3b; /* Slightly lighter background */
+  width: 70%;
+  background-color: #3b3b3b;
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
-  margin: 2rem auto; /* Center horizontally */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 2rem auto;
 }
 
-/* Search Results Grid */
 .search-results {
-  display: grid; /* Use grid layout */
-  grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-  gap: 1rem; /* Space between cards */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Individual Card */
 .search-results li {
-  background-color: #444; /* Dark gray background */
+  background-color: #444;
   padding: 1rem;
   border-radius: 10px;
   color: #fdfd54;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Footer */
 .footer {
   background-color: #292929;
   color: #fdfd54;
