@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/search.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
+    <title>Search Results</title>
 </head>
 <body>
   <header class="header">
@@ -31,18 +31,29 @@
       <!-- Results Container -->
       <div class="results-container">
         <ul class="search-results">
-            <% if (typeof results !== "undefined" && results.length > 0) { %>
+            <% if (results && results.length > 0) { %>
                 <% results.forEach(result => { %>
                     <li>
-                        <strong><%= result.name %></strong><br>
-                        <%= result.position %><br>
-                        @ <%= result.company %>
+                        <div class="card">
+                            <div class="card-header">
+                                <span class="card-name"><%= result.name %></span>
+                                <span class="card-brand">ByteCard</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-position"><%= result.position %></div>
+                            </div>
+                            <div class="card-footer">
+                                <span class="company-name"><%= result.company %></span>
+                                <span class="card-industry">Industry</span>
+                            </div>
+                        </div>
                     </li>
                 <% }); %>
-            <% } else if (typeof results !== "undefined") { %>
+            <% } else { %>
                 <li>No results found.</li>
             <% } %>
         </ul>
+        
       </div>
   </div>
   

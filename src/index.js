@@ -60,10 +60,12 @@ app.get("/search", (req, res) => {
   const results = [
     { name: "John Doe", position: "Software Engineer", company: "Tech Corp" },
     { name: "Jane Smith", position: "Product Manager", company: "Innovate Inc" },
+    { name: "Alice Brown", position: "Data Scientist", company: "AI Labs" },
+    { name: "Robert Green", position: "UX Designer", company: "Creative Co." },
   ];
 
   // Pass results to the EJS template
-  res.render("search", { results });
+  res.render('search', { results });
 });
 
 // User Registration Route

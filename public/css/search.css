@@ -105,7 +105,7 @@ form {
 }
 
 .results-container {
-  width: 70%;
+  width: 90%;
   background-color: #3b3b3b;
   padding: 1rem;
   border-radius: 10px;
@@ -115,21 +115,75 @@ form {
 
 .search-results {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dynamically adjust columns */
   gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.search-results li {
-  background-color: #444;
+.card {
+  background-color: #fdfd54;
+  color: #000;
   padding: 1rem;
+  padding-left: 3rem;
   border-radius: 10px;
-  color: #fdfd54;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.679);
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: space-between; /* Ensure the footer is pushed to the bottom */
+  height: 200px; /* Fixed height for uniformity */
 }
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.card-name {
+  font-size: 1.5rem;
+  text-shadow: 0 1px 3px rgb(146, 146, 146); /* Card shadow */
+  text-decoration: underline;
+  padding-top: 2rem;
+}
+
+.card-brand {
+  font-size: 1.5rem;
+  color: #f5f5f5;
+  text-shadow: 0 1px 8px rgb(0, 0, 0); /* Card shadow */
+  padding: .5rem;
+}
+
+.card-position {
+  margin: 1.5rem 0;
+  text-shadow: 0 1px 3px rgb(146, 146, 146); /* Card shadow */
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between; /* Space between footer items */
+  font-size: 1.2rem;
+  text-shadow: 0 1px 3px rgb(146, 146, 146); /* Card shadow */
+  align-items: center; /* Center footer items vertically */
+  margin-top: auto; /* Push footer to the bottom of the card */
+  padding-bottom: 2rem;
+  padding-right: 2rem;
+}
+
+
+
+/* Hover Effects */
+.search-results li:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.search-results li:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 
 .footer {
   background-color: #292929;
