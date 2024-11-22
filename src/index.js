@@ -140,9 +140,9 @@ app.post("/login", async (req, res) => {
 
   app.get("/users", async (req, res) => {
     try {
-      const result = await client.query('SELECT * FROM "ByteCard".users');
-      const users = result.rows;
-      res.render("users", { users });
+      const result = await client.query('SELECT * FROM "ByteCard".cards');
+      const cards = result.rows;
+      res.render("users", { cards });
     } catch (error) {
       console.error(error);
       res.status(500).send("Server error");
