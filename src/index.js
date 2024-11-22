@@ -55,6 +55,10 @@ app.get("/cardcreator", (req, res) => {
   res.render("cardcreator");
 });
 
+app.get("/logout", (req, res) => {
+  res.render("logout");
+});
+
 app.get("/search", (req, res) => {
   //temp data to test search display
   const results = [
@@ -132,6 +136,22 @@ app.post("/login", async (req, res) => {
       res.status(500).send("Server error");
     }
   });
+
+
+  app.get("/users", async (req, res) => {
+    try {
+      const result = await client.query('SELECT * FROM "ByteCard".users');
+      const users = result.rows;
+      res.render("users", { users });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Server error");
+    }
+  });
+
+
+
+
 
 
 // Start the server
