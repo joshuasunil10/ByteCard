@@ -29,34 +29,37 @@
       </form>
 
       <!-- Results Container -->
-      <div class="results-container">
-        <ul class="search-results">
-            <% if (results && results.length > 0) { %>
-                <% results.forEach(result => { %>
-                    <li>
-                        <div class="card">
-                            <div class="card-header">
-                                <span class="card-name"><%= result.name %></span>
-                                <span class="card-brand">ByteCard</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="card-position"><%= result.position %></div>
-                            </div>
-                            <div class="card-footer">
-                                <span class="company-name"><%= result.company %></span>
-                                <span class="card-industry">Industry</span>
-                            </div>
-                        </div>
-                    </li>
-                <% }); %>
-            <% } else { %>
-                <li>No results found.</li>
-            <% } %>
-        </ul>
+
+        <div class="results-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Card Name</th>
+                        <th>Card Position</th>
+                        <th>Card Company</th>
+                        <th>Tag ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (cards && cards.length > 0) { %>
+                        <% cards.forEach(function(card) { %>
+                            <tr>
+                                <td><%= card.cardname %></td>
+                                <td><%= card.card_position %></td>
+                                <td><%= card.card_company %></td>
+                                <td><%= card.tagid %></td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="4">No results found.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
         
-      </div>
-  </div>
-  
+        
   <footer class="footer">
       ByteCard - 2024
   </footer>
