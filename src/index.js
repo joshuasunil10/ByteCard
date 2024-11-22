@@ -60,16 +60,23 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-  //temp data to test search display
-  const results = [
-    { name: "John Doe", position: "Software Engineer", company: "Tech Corp" },
-    { name: "Jane Smith", position: "Product Manager", company: "Innovate Inc" },
-    { name: "Alice Brown", position: "Data Scientist", company: "AI Labs" },
-    { name: "Robert Green", position: "UX Designer", company: "Creative Co." },
-  ];
+  // //temp data to test search display
+  // const results = [
+  //   { name: "John Doe", position: "Software Engineer", company: "Tech Corp" },
+  //   { name: "Jane Smith", position: "Product Manager", company: "Innovate Inc" },
+  //   { name: "Alice Brown", position: "Data Scientist", company: "AI Labs" },
+  //   { name: "Robert Green", position: "UX Designer", company: "Creative Co." },
+  // ];
 
-  // Pass results to the EJS template
-  res.render('search', { results });
+
+  try {
+    const result =  client.query('SELECT * FROM "ByteCard".cards');
+    const cards = result.rows; // Fetch the rows from the query
+    res.render("search", { cards }); // Pass the data as "results"
+  } catch (error) {
+      console.error(error);
+      res.status(500).send("Server error");
+  }
 });
 
 // User Registration Route
