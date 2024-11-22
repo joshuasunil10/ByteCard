@@ -59,25 +59,18 @@ app.get("/logout", (req, res) => {
   res.render("logout");
 });
 
-app.get("/search", (req, res) => {
-  // //temp data to test search display
-  // const results = [
-  //   { name: "John Doe", position: "Software Engineer", company: "Tech Corp" },
-  //   { name: "Jane Smith", position: "Product Manager", company: "Innovate Inc" },
-  //   { name: "Alice Brown", position: "Data Scientist", company: "AI Labs" },
-  //   { name: "Robert Green", position: "UX Designer", company: "Creative Co." },
-  // ];
-
-
+app.get("/search", async (req, res) => {
   try {
-    const result =  client.query('SELECT * FROM "ByteCard".cards');
-    const cards = result.rows; // Fetch the rows from the query
-    res.render("search", { cards }); // Pass the data as "results"
+    const result = await client.query('SELECT cardname, card_position, card_company, tagid FROM "ByteCard".cards');
+    const cards = result.rows; // Extract rows from the query result
+    console.log("Query Result:", cards); // Log to ensure data is fetched
+    res.render("search", { cards }); // Pass "cards" to the template
   } catch (error) {
-      console.error(error);
-      res.status(500).send("Server error");
+    console.error("Error fetching cards:", error);
+    res.status(500).send("Server error");
   }
 });
+
 
 // User Registration Route
 app.post("/register", async (req, res) => {
