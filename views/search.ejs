@@ -29,34 +29,33 @@
       </form>
 
       <!-- Results Container -->
-
         <div class="results-container">
             <table>
                 <thead>
-                    <tr>
-                        <th>Card Name</th>
-                        <th>Card Position</th>
-                        <th>Card Company</th>
-                        <th>Tag ID</th>
-                    </tr>
+                  <tr>
+                    <th>Card Name</th>
+                    <th>Card Position</th>
+                    <th>Card Company</th>
+                    <th>Tag ID</th>
+                  </tr>
                 </thead>
                 <tbody>
-                    <% if (cards && cards.length > 0) { %>
-                        <% cards.forEach(function(card) { %>
-                            <tr>
-                                <td><%= card.cardname %></td>
-                                <td><%= card.card_position %></td>
-                                <td><%= card.card_company %></td>
-                                <td><%= card.tagid %></td>
-                            </tr>
-                        <% }); %>
-                    <% } else { %>
-                        <tr>
-                            <td colspan="4">No results found.</td>
-                        </tr>
-                    <% } %>
+                  <% if (cards && cards.length > 0) { %>
+                    <% cards.forEach(function(card) { %>
+                      <tr>
+                        <td><%= card.cardname %></td>
+                        <td><%= card.card_position %></td>
+                        <td><%= card.card_company %></td>
+                        <td><%= card.tagid %></td>
+                      </tr>
+                    <% }); %>
+                  <% } else { %>
+                    <tr>
+                      <td colspan="4">No results found.</td>
+                    </tr>
+                  <% } %>
                 </tbody>
-            </table>
+              </table>
         </div>
         
         
