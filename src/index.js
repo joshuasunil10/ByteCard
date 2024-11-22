@@ -19,8 +19,8 @@ app.use(express.static("public"));
 
 // Connect to PostgreSQL database
 const client = new Client({
-  user: "joshua",
-  host: "localhost",
+  user: "cian",
+  host: "10.156.6.45",
   database: "postgres",
   password: "1234",
   port: 54321,
@@ -70,6 +70,7 @@ app.get("/search", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 
 
 // User Registration Route
@@ -140,9 +141,9 @@ app.post("/login", async (req, res) => {
 
   app.get("/users", async (req, res) => {
     try {
-      const result = await client.query('SELECT * FROM "ByteCard".cards');
-      const cards = result.rows;
-      res.render("users", { cards });
+      const result = await client.query('SELECT * FROM "ByteCard".users');
+      const users = result.rows;
+      res.render("users", { users });
     } catch (error) {
       console.error(error);
       res.status(500).send("Server error");
