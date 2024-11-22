@@ -1,0 +1,263 @@
+/* Global styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box; /* Include padding and borders in element's width/height */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #3a3a3a;
+    color: #f5f5f5;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #292929;
+    color: #f5f5f5;
+    position: sticky; /* Makes the header sticky */
+    top: 0; /* Keeps it at the top of the page */
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header.sticky {
+    background-color: #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fdfd54;
+}
+
+.nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-link {
+    color: #fdfd54;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Hero section */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 5rem;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    color: #d5ec06;
+    margin: 0;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: #afafaf;
+    margin: 0;
+}
+
+.hero-img {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    color: #313131;
+    background-color: #fbff00;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #ffc400;
+}
+
+/* How it works section */
+.how-it-works {
+    padding: 4rem 2rem;
+    background-color: #2e2e2e;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #e7e423;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    font-size: 1.2rem;
+    color: #9b9b9b;
+    margin-bottom: 2.5rem;
+}
+
+.steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.step {
+    flex: 1 1 300px;
+    max-width: 300px;
+    background: #ffdc42;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.step-icon {
+    color: #000000;
+}
+
+.step-title {
+    font-size: 1.5rem;
+    color: #000000;
+    margin-bottom: 0.5rem;
+}
+
+.step-description {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+
+
+}
+
+
+/* contact */
+
+/* Contact Section Styles */
+.contact {
+    padding: 4rem 2rem;
+    background-color: #4b4a4a;
+    text-align: center;
+    
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #e7e423;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    font-size: 1.2rem;
+    color: #9b9b9b;
+    margin-bottom: 2.5rem;
+}
+
+
+
+/* Footer */
+.footer {
+    background-color: #292929;
+    color: #fdfd54;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    
+
+
+    .hero {
+        padding: 3rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        padding: 0.5rem 1rem;
+    }
+
+  
+
+
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 0.5rem;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .nav-link {
+        font-size: 0.9rem;
+    }
+
+    .hero {
+        padding: 2rem;
+    }
+
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-description {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        padding: 0.5rem 1rem;
+    }
+
+    .steps {
+        gap: 1rem;
+    }
+
+    .step {
+        max-width: 100%; /* Make steps take up full width on small screens */
+    }
+}
