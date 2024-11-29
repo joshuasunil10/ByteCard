@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | ByteCard</title>
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="/css/modal.css">
 </head>
 <body>
     <header class="header">
@@ -16,16 +17,102 @@
     </header>
 
     <main class="main-container">
-        <h1>Welcome [User]!</h1>
-        <h2>Your Cards:</h2>
-        <div class="card-container">
-            <button class="custom-button">+</button>
+        <h1>Welcome <span class="text"><%= user.name %>!</span></h1>
+        <h2>Your ByteCards</h2>
+
+        <!-- Cards for ByteCards (example) -->
+        <div class="cards-container">
+            <!-- Example ByteCard -->
+            <div class="card">
+                <h3>ByteCard 1</h3>
+                <p>Details about ByteCard 1...</p>
+            </div>
+            <div class="card">
+                <h3>ByteCard 2</h3>
+                <p>Details about ByteCard 2...</p>
+            </div>
+
+            <button id="create" class="btn create-btn">+</button>
+            <br>
+            <br>
+        
+            <!-- Add more ByteCards here -->
         </div>
 
+        <h2>Account Settings</h2>
+
+        <!-- Delete Account Button -->
+        <button id="deleteBtn" class="btn delete-btn">Delete Account</button>
+        
+        <!-- Modal for Account Deletion Confirmation -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <h2>Are you sure you want to delete your account?</h2>
+                <p>This action cannot be undone.</p>
+                <input type="password" id="passwordInput" placeholder="Enter your password">
+                <div class="modal-actions">
+                    <button id="confirmDeleteBtn" class="btn confirm-btn">Confirm</button>
+                    <button id="cancelDeleteBtn" class="btn cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">
         ByteCard - 2024
     </footer>
+
+    <script>
+        // Get the button and the modal elements
+        const deleteBtn = document.getElementById("deleteBtn");
+        const deleteModal = document.getElementById("deleteModal");
+        const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+        const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+        const passwordInput = document.getElementById("passwordInput");
+
+        // Show the modal when the delete button is clicked
+        deleteBtn.addEventListener("click", () => {
+            deleteModal.style.display = "flex"; // Show the modal
+            deleteBtn.style.display = "none"; // Hide the delete button
+        });
+
+        // Close the modal when the cancel button is clicked
+        cancelDeleteBtn.addEventListener("click", () => {
+            deleteModal.style.display = "none"; // Hide the modal
+            deleteBtn.style.display = "block"; // Show the delete button again
+        });
+
+        // Handle account deletion when confirm is clicked
+        confirmDeleteBtn.addEventListener("click", async () => {
+            const password = passwordInput.value;
+
+            if (!password) {
+                alert("Please enter your password.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/delete-account", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ password: password }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert("Account deleted successfully.");
+                    window.location.href = "/login"; // Redirect to login page after deletion
+                } else {
+                    alert(result.message || "Error deleting account.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            }
+        });
+    </script>
 </body>
 </html>

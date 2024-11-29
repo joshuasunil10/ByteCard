@@ -13,173 +13,145 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #292929;
-  color: #f5f5f5;
+  background-color: #2c2c2c;
+  color: #3f3f3f;
 }
 
 .logo {
-  font-size: 1.5rem;
+  font-size: 1.8rem; /* Slightly larger logo for better visibility */
   font-weight: bold;
-  color: #fdfd54; /* Bright yellow color */
+  color: #ff8080; /* Bright yellow color */
+}
+
+.card {
+  background-color: #ff5d5d;
+  color: #000000;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 200px;
+  align-items: center;
 }
 
 .nav {
   display: flex;
-  gap: 15px;
+  gap: 20px;
 }
 
 .nav-link {
-  color: #fdfd54;
+  color: #ffffff;
   text-decoration: none;
   font-weight: bold;
 }
 
 .nav-link:hover {
   text-decoration: underline;
+  color: #ff6060;
 }
 
 /* Main Content */
 .main-container {
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  text-align: center;
+  margin: 100px 20px 20px 20px; /* Adjusted for consistent margin on all sides */
 }
 
 h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
-  color: #fdfd54; /* Bright yellow color */
+  color: #ffffff;
 }
 
 h2 {
   font-size: 1.5rem;
   margin-bottom: 20px;
-  color: #f5f5f5;
+  color: #f7f7f7;
 }
 
-/* Card Container */
-.card-container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.card {
-  background-color: #fdfd54; /* Bright yellow background */
-  color: #333;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 250px;
-  text-align: left;
-}
-
-
-.card .brand
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.card-header h3 {
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.brand {
-  font-weight: bold;
-  font-size: 0.9rem;
-  color: #333;
-}
-
-.role {
-  font-size: 1rem;
-  margin: 10px 0;
-}
-
-.company-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-.share-btn {
-  background-color: #333;
-  color: #fdfd54;
+.delete-btn {
+  background-color: #fdff93;
+  color: #000000;
+  padding: 10px 20px;
   border: none;
-  padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9rem;
-  width: 100%;
-  margin-top: 10px;
 }
 
-.share-btn:hover {
-  background-color: #444;
-}
-
-/* Add Card Button */
-.add-card-btn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background-color: #fdfd54;
-  color: #333;
+.create-btn {
+  background-color: #ff3737;
+  color: #000000;
+  padding: 10px 20px;
   border: none;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  font-size: 1.5rem;
+  border-radius: 5px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.add-card-btn:hover {
-  background-color: #e6e600;
+.text{
+  color: rgb(233, 125, 125);
 }
 
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.delete-btn:hover {
+  background-color: #ffe553; /* Darker red when hovered */
 }
 
-.custom-button {
-  background-color: #fdfd54; /* Bright yellow */
-  color: #000; /* Black for the "+" */
-  font-size: 2rem; /* Size of the "+" symbol */
-  font-weight: bold;
-  border: none;
-  border-radius: 20px; /* Rounded corners */
-  padding: 10px 30px; /* Adjust for desired size */
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
-  transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
-}
-
-.custom-button:hover {
-  transform: scale(1.05); /* Slight enlargement */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4); /* More pronounced shadow */
-}
-
-.custom-button:active {
-  transform: scale(0.95); /* Slightly shrink when clicked */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduce shadow */
+.create-btn:hover {
+  background-color: #ff5d5d; /* Darker red when hovered */
 }
 
 /* Footer */
 .footer {
   background-color: #292929;
-  color: #fdfd54;
+  color: #ffffff;
   text-align: center;
   padding: 10px;
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .delete-btn {
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  .delete-btn {
+    width: 100%; /* Full-width delete button on small screens */
+    padding: 12px;
+  }
 }

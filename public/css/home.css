@@ -35,7 +35,7 @@ body {
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #fdfd54;
+    color: #f3f3f3;
 }
 
 .nav {
@@ -44,13 +44,14 @@ body {
 }
 
 .nav-link {
-    color: #fdfd54;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
 }
 
 .nav-link:hover {
-    text-decoration: underline;
+    
+    color: #ff3737;
 }
 
 /* Hero section */
@@ -72,13 +73,13 @@ body {
 
 .hero-title {
     font-size: 2.5rem;
-    color: #d5ec06;
+    color: #ffffff;
     margin: 0;
 }
 
 .hero-description {
     font-size: 1.2rem;
-    color: #afafaf;
+    color: #ff6767da;
     margin: 0;
 }
 
@@ -91,27 +92,27 @@ body {
 .btn-primary {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    color: #313131;
-    background-color: #fbff00;
+    color: #ffffff;
+    background-color: #f17272;
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #ffc400;
+    background-color: #ff3c3c;
 }
 
 /* How it works section */
 .how-it-works {
     padding: 4rem 2rem;
-    background-color: #2e2e2e;
+    background-color: #464646;
     text-align: center;
 }
 
 .section-title {
     font-size: 2rem;
-    color: #e7e423;
+    color: #e72323;
     margin-bottom: 1rem;
 }
 
@@ -131,7 +132,7 @@ body {
 .step {
     flex: 1 1 300px;
     max-width: 300px;
-    background: #ffdc42;
+    background: #c5c5c5;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 2rem;
@@ -142,6 +143,7 @@ body {
 .step:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    background-color: #f17272;
 }
 
 .step-icon {
@@ -150,7 +152,7 @@ body {
 
 .step-title {
     font-size: 1.5rem;
-    color: #000000;
+    color: #00272c;
     margin-bottom: 0.5rem;
 }
 
@@ -175,13 +177,13 @@ body {
 
 .section-title {
     font-size: 2rem;
-    color: #e7e423;
+    color: #f76f6f;
     margin-bottom: 1rem;
 }
 
 .section-description {
     font-size: 1.2rem;
-    color: #9b9b9b;
+    color: #ffffff;
     margin-bottom: 2.5rem;
 }
 
@@ -190,7 +192,7 @@ body {
 /* Footer */
 .footer {
     background-color: #292929;
-    color: #fdfd54;
+    color: #ffffff;
     text-align: center;
     padding: 1rem;
     position: relative;
