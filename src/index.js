@@ -71,8 +71,12 @@ app.get("/search", async (req, res) => {
   try {
     // Perform the database query
     const result = await client.query(
-      'SELECT cardname, card_position, card_company, tagid FROM "ByteCard".cards'
+      `SELECT card_name, card_position, card_company, tagname 
+       FROM "ByteCard".card 
+       JOIN "ByteCard".tag 
+       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid`
     );
+      
     const cards = result.rows; // Extract rows from the query result
 
     console.log("Query Result:", cards); // Log to ensure data is fetched
@@ -98,7 +102,7 @@ app.post("/forgot-password", async (req, res) => {
 
   try {
     // Query the database to see if the email exists
-    const result = await client.query('SELECT * FROM "ByteCard".users WHERE email = $1', [email]);
+    const result = await client.query('SELECT * FROM "ByteCard".user WHERE email = $1', [email]);
     const user = result.rows[0];
 
     if (!user) {
@@ -133,7 +137,7 @@ app.post("/reset-password", async (req, res) => {
 
   try {
     // Query the database to fetch the user by email
-    const result = await client.query('SELECT * FROM "ByteCard".users WHERE email = $1', [email]);
+    const result = await client.query('SELECT * FROM "ByteCard".user WHERE email = $1', [email]);
     const user = result.rows[0];
 
     if (!user) {
@@ -149,7 +153,7 @@ app.post("/reset-password", async (req, res) => {
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
     // Update the user's password in the database
-    await client.query('UPDATE "ByteCard".users SET password = $1 WHERE email = $2', [hashedPassword, email]);
+    await client.query('UPDATE "ByteCard".user SET password = $1 WHERE email = $2', [hashedPassword, email]);
 
     console.log("Password updated successfully for user:", email);
 
@@ -173,7 +177,7 @@ app.post("/delete-account", async (req, res) => {
 
   try {
       // Fetch the user from the database
-      const result = await client.query('SELECT * FROM "ByteCard".users WHERE "userid" = $1', [userId]);
+      const result = await client.query('SELECT * FROM "ByteCard".user WHERE "userid" = $1', [userId]);
       const user = result.rows[0];
 
       if (!user) {
@@ -189,7 +193,7 @@ app.post("/delete-account", async (req, res) => {
 
 
       // Now delete the user
-      await client.query('DELETE FROM "ByteCard".users WHERE "userid" = $1', [userId]);
+      await client.query('DELETE FROM "ByteCard".user WHERE "userid" = $1', [userId]);
 
       // Destroy the session and send a response
       req.session.destroy((err) => {
@@ -215,7 +219,7 @@ app.post("/login", async (req, res) => {
   try {
       console.log("Login attempt with email:", email); 
 
-      const result = await client.query('SELECT * FROM "ByteCard".users WHERE email = $1', [email]);
+      const result = await client.query('SELECT * FROM "ByteCard".user WHERE email = $1', [email]);
       const user = result.rows[0];
 
       if (!user) {
@@ -254,7 +258,7 @@ app.post("/register", async (req, res) => {
 
   try {
     // Check if the user already exists
-    const userCheck = await client.query('SELECT * FROM "ByteCard".users WHERE email = $1', [email]);
+    const userCheck = await client.query('SELECT * FROM "ByteCard".user WHERE email = $1', [email]);
     if (userCheck.rows.length > 0) {
       return res.render("register", { error: "Email already registered", name, email });
     }
@@ -264,7 +268,7 @@ app.post("/register", async (req, res) => {
 
     // Insert the user into the database
     await client.query(
-      'INSERT INTO "ByteCard".users (name, email, password) VALUES ($1, $2, $3)',
+      'INSERT INTO "ByteCard".user (name, email, password) VALUES ($1, $2, $3)',
       [name, email, hashedPassword]
     );
 

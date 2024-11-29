@@ -33,7 +33,7 @@
           <% cards.forEach(function(card) { %>
             <li class="card">
               <div class="card-header">
-                <span class="card-name"><%= card.cardname %></span>
+                <span class="card-name"><%= card.card_name %></span>
                 <span class="card-brand">ByteCard</span>
               </div>
               <div class="card-body">
@@ -41,7 +41,7 @@
               </div>
               <div class="card-footer">
                 <span class="company-name"><%= card.card_company %></span>
-                <span class="card-industry">Tag ID: <%= card.tagid %></span>
+                <span class="card-industry"><%= card.tagname %></span>
               </div>
             </li>
           <% }); %>
