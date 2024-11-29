@@ -29,51 +29,33 @@
       </form>
 
       <!-- Results Container -->
-      <body>
-        <header class="header">
-          <div class="logo">ByteCard</div>
-          <nav class="nav">
-            <a href="/home" class="nav-link">Home</a>
-            <a href="/login" class="nav-link">Login</a>
-          </nav>
-        </header>
-      
-        <div class="container">
-          <h1 class="search_text">Cards Table</h1>
-          <div class="results-container">
-            <ul class="search-results">
-              <% if (cards && cards.length > 0) { %>
-                <% cards.forEach(function(card) { %>
-                  <li class="card">
-                    <div class="card-header">
-                      <span class="card-name"><%= card.cardname %></span>
-                      <span class="card-brand">ByteCard</span>
-                    </div>
-                    <div class="card-body">
-                      <div class="card-position"><%= card.card_position %></div>
-                    </div>
-                    <div class="card-footer">
-                      <span class="company-name"><%= card.card_company %></span>
-                      <span class="card-industry">Tag ID: <%= card.tagid %></span>
-                    </div>
-                  </li>
-                <% }); %>
-              <% } else { %>
-                <li>No results found.</li>
-              <% } %>
-            </ul>
-          </div>
-        </div>
-      
-        <footer class="footer">
-          ByteCard - 2024
-        </footer>
-      </body>
-      
-        
-        
-  <footer class="footer">
-      ByteCard - 2024
-  </footer>
+ <!-- Results Container -->
+ <div class="results-container">
+  <table>
+      <thead>
+        <tr>
+          <th>Card Name</th>
+          <th>Card Position</th>
+          <th>Card Company</th>
+          <th>Tag ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (cards && cards.length > 0) { %>
+          <% cards.forEach(function(card) { %>
+            <tr>
+              <td><%= card.cardname %></td>
+              <td><%= card.card_position %></td>
+              <td><%= card.card_company %></td>
+              <td><%= card.tagid %></td>
+            </tr>
+          <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="4">No results found.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
 </body>
 </html>

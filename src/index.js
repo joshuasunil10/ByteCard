@@ -23,8 +23,8 @@ app.use(
 
 // Database client setup
 const client = new Client({
-  user: "cian",
-  host: "localhost",
+  user: "joshua",
+  host: "10.156.6.25",
   database: "postgres",
   password: "1234",
   port: 54321,
@@ -67,10 +67,27 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
-app.get("/search", (req, res) => {
-  console.log("Search page accessed. Current session:", req.session.user); 
-  res.render("search");
+app.get("/search", async (req, res) => {
+  try {
+    // Perform the database query
+    const result = await client.query(
+      'SELECT cardname, card_position, card_company, tagid FROM "ByteCard".cards'
+    );
+    const cards = result.rows; // Extract rows from the query result
+
+    console.log("Query Result:", cards); // Log to ensure data is fetched
+
+    // Pass the cards to the search.ejs template
+    res.render("search", { cards });
+  } catch (error) {
+    console.error("Error fetching cards:", error);
+
+    // Pass an empty array to the template in case of an error
+    res.render("search", { cards: [] });
+  }
 });
+
+
 
 app.get("/forgot-password", (req, res) => {
   res.render("forgot-password"); 
