@@ -16,7 +16,17 @@
   </header>
 
   <div class="container">
-    <h1 class="search_text">Cards Table</h1>
+    <div class="search_text">Search for ByteCards</div>
+    <form action="/search" method="GET">
+        <input 
+            type="text" 
+            class="search-input" 
+            name="query" 
+            placeholder="Enter search query..." 
+            required 
+        />
+        <button type="submit" class="btn">Search</button>
+    </form>
     <div class="results-container">
       <ul class="search-results">
         <% if (cards && cards.length > 0) { %>
