@@ -173,41 +173,49 @@ app.post("/reset-password", async (req, res) => {
 
 app.post("/delete-account", async (req, res) => {
   const { password } = req.body;
-  const userId = req.session.user.id; // Assuming you store user ID in session
 
+  // Check if the user is logged in by verifying the session
+  if (!req.session || !req.session.user || !req.session.user.id) {
+    return res.status(401).json({ message: "User not logged in" });
+  }
+
+  const userId = req.session.user.id; // Now we can safely use it
+  
   try {
-      // Fetch the user from the database
-      const result = await client.query('SELECT * FROM "ByteCard".user WHERE "userid" = $1', [userId]);
-      const user = result.rows[0];
+    // Fetch the user from the database
+    const result = await client.query('SELECT * FROM "ByteCard".user WHERE "userid" = $1', [userId]);
+    const user = result.rows[0];
 
-      if (!user) {
-          return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Incorrect password" });
+    }
+
+    // First, delete the user's cards (if any)
+    await client.query('DELETE FROM "ByteCard".card WHERE "user_userid" = $1', [userId]);
+
+    // Now delete the user
+    await client.query('DELETE FROM "ByteCard".user WHERE "userid" = $1', [userId]);
+
+    // Destroy the session and send a response
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error destroying session:", err);
+        return res.status(500).json({ message: "Failed to log out" });
       }
-
-      // Compare password
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-          return res.status(400).json({ message: "Incorrect password" });
-      }
-
-
-
-      // Now delete the user
-      await client.query('DELETE FROM "ByteCard".user WHERE "userid" = $1', [userId]);
-
-      // Destroy the session and send a response
-      req.session.destroy((err) => {
-          if (err) {
-              console.error("Error destroying session:", err);
-              return res.status(500).json({ message: "Failed to log out" });
-          }
-          res.status(200).json({ message: "Account deleted successfully" });
-      });
+      res.status(200).json({ message: "Account deleted successfully" });
+    });
   } catch (error) {
-      console.error("Error deleting account:", error);
-      res.status(500).json({ message: "Error deleting account" });
+    console.error("Error deleting account:", error);
+    res.status(500).json({ message: "Error deleting account" });
   }
 });
+
 
 
 
