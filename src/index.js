@@ -67,9 +67,24 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
-app.get("/search", (req, res) => {
-  console.log("Search page accessed. Current session:", req.session.user); 
-  res.render("search");
+app.get("/search", async (req, res) => {
+  try {
+    // Perform the database query
+    const result = await client.query(
+      'SELECT cardname, card_position, card_company, tagid FROM "ByteCard".cards'
+    );
+    const cards = result.rows; // Extract rows from the query result
+
+    console.log("Query Result:", cards); // Log to ensure data is fetched
+
+    // Pass the cards to the search.ejs template
+    res.render("search", { cards });
+  } catch (error) {
+    console.error("Error fetching cards:", error);
+
+    // Pass an empty array to the template in case of an error
+    res.render("search", { cards: [] });
+  }
 });
 
 app.get("/forgot-password", (req, res) => {
@@ -169,8 +184,7 @@ app.post("/delete-account", async (req, res) => {
           return res.status(400).json({ message: "Incorrect password" });
       }
 
-      // Delete the user's associated cards first
-      await client.query('DELETE FROM "ByteCard".cards WHERE "userid" = $1', [userId]);
+
 
       // Now delete the user
       await client.query('DELETE FROM "ByteCard".users WHERE "userid" = $1', [userId]);

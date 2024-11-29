@@ -10,70 +10,36 @@
   <header class="header">
     <div class="logo">ByteCard</div>
     <nav class="nav">
-        <a href="/home" class="nav-link">Home</a>
-        <a href="/login" class="nav-link">Login</a>
+      <a href="/" class="nav-link">Home</a>
+      <a href="/login" class="nav-link">Login</a>
     </nav>
   </header>
-  
-  <div class="container">
-      <div class="search_text">Search for ByteCards</div>
-      <form action="/search" method="GET">
-          <input 
-              type="text" 
-              class="search-input" 
-              name="query" 
-              placeholder="Enter search query..." 
-              required 
-          />
-          <button type="submit" class="btn">Search</button>
-      </form>
 
-      <!-- Results Container -->
-      <body>
-        <header class="header">
-          <div class="logo">ByteCard</div>
-          <nav class="nav">
-            <a href="/home" class="nav-link">Home</a>
-            <a href="/login" class="nav-link">Login</a>
-          </nav>
-        </header>
-      
-        <div class="container">
-          <h1 class="search_text">Cards Table</h1>
-          <div class="results-container">
-            <ul class="search-results">
-              <% if (cards && cards.length > 0) { %>
-                <% cards.forEach(function(card) { %>
-                  <li class="card">
-                    <div class="card-header">
-                      <span class="card-name"><%= card.cardname %></span>
-                      <span class="card-brand">ByteCard</span>
-                    </div>
-                    <div class="card-body">
-                      <div class="card-position"><%= card.card_position %></div>
-                    </div>
-                    <div class="card-footer">
-                      <span class="company-name"><%= card.card_company %></span>
-                      <span class="card-industry">Tag ID: <%= card.tagid %></span>
-                    </div>
-                  </li>
-                <% }); %>
-              <% } else { %>
-                <li>No results found.</li>
-              <% } %>
-            </ul>
-          </div>
-        </div>
-      
-        <footer class="footer">
-          ByteCard - 2024
-        </footer>
-      </body>
-      
-        
-        
-  <footer class="footer">
-      ByteCard - 2024
-  </footer>
+  <div class="container">
+    <h1 class="search_text">Cards Table</h1>
+    <div class="results-container">
+      <ul class="search-results">
+        <% if (cards && cards.length > 0) { %>
+          <% cards.forEach(function(card) { %>
+            <li class="card">
+              <div class="card-header">
+                <span class="card-name"><%= card.cardname %></span>
+                <span class="card-brand">ByteCard</span>
+              </div>
+              <div class="card-body">
+                <div class="card-position"><%= card.card_position %></div>
+              </div>
+              <div class="card-footer">
+                <span class="company-name"><%= card.card_company %></span>
+                <span class="card-industry">Tag ID: <%= card.tagid %></span>
+              </div>
+            </li>
+          <% }); %>
+        <% } else { %>
+          <li>No results found.</li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
 </body>
 </html>
