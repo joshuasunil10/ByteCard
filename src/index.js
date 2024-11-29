@@ -23,8 +23,8 @@ app.use(
 
 // Database client setup
 const client = new Client({
-  user: "cian",
-  host: "localhost",
+  user: "joshua",
+  host: "10.156.6.25",
   database: "postgres",
   password: "1234",
   port: 54321,
@@ -86,6 +86,8 @@ app.get("/search", async (req, res) => {
     res.render("search", { cards: [] });
   }
 });
+
+
 
 app.get("/forgot-password", (req, res) => {
   res.render("forgot-password"); 
