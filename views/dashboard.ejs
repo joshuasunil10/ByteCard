@@ -1,205 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard | ByteCard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="css/dashboard.css">
-    <link rel="stylesheet" href="/css/modal.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="/css/modal.css" />
+  </head>
+  <body>
     <header class="header">
-        <div class="logo">ByteCard</div>
-        <nav class="nav">
-            <a href="/search" class="nav-link">Discover</a>
-            <a href="/logout" class="nav-link">Logout</a>
-        </nav>
+      <div class="logo">ByteCard</div>
+      <nav class="nav">
+        <a href="/search" class="nav-link">Discover</a>
+        <a href="/logout" class="nav-link">Logout</a>
+      </nav>
     </header>
 
     <main class="main-container">
-        <h1>Welcome <span class="text"><%= user.name %>!</span></h1>
-        <h2>Your ByteCards</h2>
+      <h1>Welcome <span class="text"><%= user.name %>!</span></h1>
+      <h2>Your ByteCards</h2>
 
-        <!-- Cards for ByteCards (example) -->
-        <div class="cards-container">
-            <!-- Example ByteCard -->
-            <div class="card">
-                <h3>ByteCard 1</h3>
-                <p>Details about ByteCard 1...</p>
-            </div>
-            <div class="card">
-                <h3>ByteCard 2</h3>
-                <p>Details about ByteCard 2...</p>
-            </div>
-
-            <button id="create" class="btn create-btn">+</button>
-            <br>
-            <br>
-        
-            <!-- Add more ByteCards here -->
+      <!-- Cards for ByteCards (example) -->
+      <div class="cards-container">
+        <!-- Example ByteCard -->
+        <div class="card">
+          <h3>ByteCard 1</h3>
+          <p>Details about ByteCard 1...</p>
+        </div>
+        <div class="card">
+          <h3>ByteCard 2</h3>
+          <p>Details about ByteCard 2...</p>
         </div>
 
-        <h2>Account Settings</h2>
+        <button id="create" class="btn create-btn">+</button>
+        <br />
+        <br />
+        <!-- Add more ByteCards here -->
+      </div>
 
-        <!-- Delete Account Button -->
-        <button id="deleteBtn" class="btn delete-btn">Delete Account</button>
-        
-        <!-- Modal for Account Deletion Confirmation -->
-        <div id="deleteModal" class="modal">
-            <div class="modal-content">
-                <h2>Are you sure you want to delete your account?</h2>
-                <p>This action cannot be undone.</p>
-                <input type="password" id="passwordInput" placeholder="Enter your password">
-                <div class="modal-actions">
-                    <button id="confirmDeleteBtn" class="btn confirm-btn">Confirm</button>
-                    <button id="cancelDeleteBtn" class="btn cancel-btn">Cancel</button>
-                </div>
-            </div>
+      <h2>Account Settings</h2>
+
+      <!-- Delete Account Button -->
+      <button id="deleteBtn" class="btn delete-btn">Delete Account</button>
+
+      <!-- Modal for Account Deletion Confirmation -->
+      <div id="deleteModal" class="modal">
+        <div class="modal-content">
+          <h2>Are you sure you want to delete your account?</h2>
+          <p>This action cannot be undone.</p>
+          <input
+            type="password"
+            id="passwordInput"
+            placeholder="Enter your password"
+          />
+          <div class="modal-actions">
+            <button id="confirmDeleteBtn" class="btn confirm-btn">
+              Confirm
+            </button>
+            <button id="cancelDeleteBtn" class="btn cancel-btn">Cancel</button>
+          </div>
         </div>
+      </div>
 
-        <!-- Modal for Card Creation -->
-        <div id="createCardModal" class="modal">
-            <div class="modal-content">
-                <h2>Create a New ByteCard</h2>
-                <form id="createCardForm">
-                    <label for="cardName">Card Name:</label>
-                    <input type="text" id="cardName" name="cardName" required>
+      <!-- Modal for Card Creation -->
+      <div id="createCardModal" class="modal">
+        <div class="modal-content">
+          <h2>Create New ByteCard</h2>
 
-                    <label for="cardPosition">Card Position:</label>
-                    <input type="text" id="cardPosition" name="cardPosition" required>
+          <!-- Form for creating a ByteCard -->
+          <form id="createCardForm">
+            <label for="cardName">Name on Card</label>
+            <input
+              type="text"
+              id="cardName"
+              name="cardName"
+              placeholder="Enter ByteCard name"
+              required
+            /><br />
 
-                    <label for="cardCompany">Card Company:</label>
-                    <input type="text" id="cardCompany" name="cardCompany" required>
+            <label for="cardPosition">Position</label>
+            <input
+              type="text"
+              id="cardPosition"
+              name="cardPosition"
+              placeholder="Enter ByteCard position"
+              required
+            /><br />
 
-                    <label for="cardTag">Card Tag:</label>
-                    <input type="text" id="cardTag" name="cardTag" required>
+            <label for="cardCompany">Company</label>
+            <input
+              type="text"
+              id="cardCompany"
+              name="cardCompany"
+              placeholder="Enter ByteCard company"
+              required
+            /><br />
 
-                    <div class="modal-actions">
-                        <button type="submit" class="btn create-btn">Create</button>
-                        <button type="button" id="cancelCreateCardBtn" class="btn cancel-btn">Cancel</button>
-                    </div>
-                </form>
-            </div>
+            <label for="tagId">Select Tag</label>
+            <select id="tagId" name="tagId">
+              <option value="1">Tech</option>
+              <option value="2">Education</option>
+              <option value="3">Finance</option>
+              <option value="4">Healthcare</option>
+              <option value="5">Retail</option>
+              <option value="6">Manufacturing</option>
+              <option value="7">Hospitality</option>
+              <option value="8">Transportation</option>
+              <option value="9">Real Estate</option>
+              <option value="10">Entertainment</option>
+            </select><br />
+
+            <button type="submit">Create ByteCard</button>
+          </form>
+          <!-- Added Cancel Button for the Create ByteCard Modal -->
+          <button id="cancelCreateCardBtn" class="btn cancel-btn">Cancel</button>
         </div>
+      </div>
     </main>
 
-    <footer class="footer">
-        ByteCard - 2024
-    </footer>
+    <footer class="footer">ByteCard - 2024</footer>
 
     <script>
-        // Get elements for delete modal
-        const deleteBtn = document.getElementById("deleteBtn");
-        const deleteModal = document.getElementById("deleteModal");
-        const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-        const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
-        const passwordInput = document.getElementById("passwordInput");
+      // Get elements for delete modal
+      const deleteBtn = document.getElementById("deleteBtn");
+      const deleteModal = document.getElementById("deleteModal");
+      const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+      const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+      const passwordInput = document.getElementById("passwordInput");
 
-        // Get elements for card creation modal
-        const createBtn = document.getElementById("create");
-        const createCardModal = document.getElementById("createCardModal");
-        const cancelCreateCardBtn = document.getElementById("cancelCreateCardBtn");
-        const createCardForm = document.getElementById("createCardForm");
+      // Get elements for card creation modal
+      const createBtn = document.getElementById("create");
+      const createCardModal = document.getElementById("createCardModal");
+      const cancelCreateCardBtn = document.getElementById(
+        "cancelCreateCardBtn"
+      ); // Added cancel button for card creation modal
+      const createCardForm = document.getElementById("createCardForm");
 
-        // Show the delete modal when the delete button is clicked
-        deleteBtn.addEventListener("click", () => {
-            deleteModal.style.display = "flex"; // Show the modal
-            deleteBtn.style.display = "none"; // Hide the delete button
-        });
+      // Show the delete modal when the delete button is clicked
+      deleteBtn.addEventListener("click", () => {
+        deleteModal.style.display = "flex"; // Show the modal
+        deleteBtn.style.display = "none"; // Hide the delete button
+      });
 
-        // Close the delete modal when the cancel button is clicked
-        cancelDeleteBtn.addEventListener("click", () => {
-            deleteModal.style.display = "none"; // Hide the modal
-            deleteBtn.style.display = "block"; // Show the delete button again
-        });
+      // Close the delete modal when the cancel button is clicked
+      cancelDeleteBtn.addEventListener("click", () => {
+        deleteModal.style.display = "none"; // Hide the modal
+        deleteBtn.style.display = "block"; // Show the delete button again
+      });
 
-        // Handle account deletion when confirm is clicked
-        confirmDeleteBtn.addEventListener("click", async () => {
-            const password = passwordInput.value;
+      // Handle account deletion when confirm is clicked
+      confirmDeleteBtn.addEventListener("click", async () => {
+        const password = passwordInput.value;
 
-            if (!password) {
-                alert("Please enter your password.");
-                return;
-            }
+        if (!password) {
+          alert("Please enter your password.");
+          return;
+        }
 
-            try {
-                const response = await fetch("/delete-account", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ password: password }),
-                });
+        try {
+          const response = await fetch("/delete-account", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ password: password }),
+          });
 
-                const result = await response.json();
+          const result = await response.json();
 
-                if (response.ok) {
-                    alert("Account deleted successfully.");
-                    window.location.href = "/login"; // Redirect to login page after deletion
-                } else {
-                    alert(result.message || "Error deleting account.");
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                alert("An error occurred. Please try again.");
-            }
-        });
+          if (response.ok) {
+            alert("Account deleted successfully.");
+            window.location.href = "/login"; // Redirect to login page after deletion
+          } else {
+            alert(result.message || "Error deleting account.");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again.");
+        }
+      });
 
-        // Show the card creation modal when the create button is clicked
-        createBtn.addEventListener("click", () => {
-            createCardModal.style.display = "flex"; // Show the modal
-        });
+      // Show the card creation modal when the create button is clicked
+      createBtn.addEventListener("click", () => {
+        createCardModal.style.display = "flex"; // Show the modal
+      });
 
-        // Close the card creation modal when the cancel button is clicked
-        cancelCreateCardBtn.addEventListener("click", () => {
-            createCardModal.style.display = "none"; // Hide the modal
-        });
+      // Close the card creation modal when the cancel button is clicked
+      cancelCreateCardBtn.addEventListener("click", () => {
+        createCardModal.style.display = "none"; // Hide the modal
+      });
 
-        // Handle card creation when the form is submitted
-        createCardForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
+      // Handle card creation when the form is submitted
+      createCardForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-            const cardName = document.getElementById("cardName").value;
-            const cardPosition = document.getElementById("cardPosition").value;
-            const cardCompany = document.getElementById("cardCompany").value;
-            const cardTag = document.getElementById("cardTag").value;
+        const cardName = document.getElementById("cardName").value;
+        const cardPosition = document.getElementById("cardPosition").value;
+        const cardCompany = document.getElementById("cardCompany").value;
+        const cardTag = document.getElementById("tagId").value; // Make sure this input is the one for tag selection
 
-            if (!cardName || !cardPosition || !cardCompany || !cardTag) {
-                alert("All fields are required.");
-                return;
-            }
+        if (!cardName || !cardPosition || !cardCompany || !cardTag) {
+          alert("All fields are required.");
+          return;
+        }
 
-            try {
-                const response = await fetch("/create-card", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        cardName,
-                        cardPosition,
-                        cardCompany,
-                        cardTag
-                    }),
-                });
+        try {
+          const response = await fetch("/createByteCard", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              cardName,
+              cardPosition,
+              cardCompany,
+              cardTag,
+            }),
+          });
 
-                const result = await response.json();
+          const result = await response.json();
 
-                if (response.ok) {
-                    alert("Card created successfully.");
-                    window.location.reload(); // Reload the page to display the new card
-                } else {
-                    alert(result.message || "Error creating card.");
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                alert("An error occurred. Please try again.");
-            }
-        });
+          if (response.ok) {
+            alert("Card created successfully.");
+            window.location.reload(); // Reload the page to display the new card
+          } else {
+            alert(result.message || "Error creating card.");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again.");
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

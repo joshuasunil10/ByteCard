@@ -24,7 +24,7 @@ app.use(
 // Database client setup
 const client = new Client({
   user: "joshua",
-  host: "10.156.6.25",
+  host: "localhost",
   database: "postgres",
   password: "1234",
   port: 54321,
@@ -303,6 +303,43 @@ app.get("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
+
+app.get("/dashboard", requireLogin, async (req, res) => {
+  try {
+      const result = await client.query('SELECT tagid, tagname FROM "ByteCard".tag');
+      console.log("Tags fetched:", result.rows);
+      const tags = result.rows; // Fetch available tags
+      res.render("dashboard", { user: req.session.user, tags });
+  } catch (error) {
+      console.error("Error fetching tags:", error);
+      res.render("dashboard", { user: req.session.user, tags: [] }); // Pass an empty array in case of error
+  }
+});
+
+
+// Route to handle ByteCard creation
+app.post("/createByteCard", requireLogin, async (req, res) => {
+  const { cardName, cardPosition, cardCompany, visibility, tagIds } = req.body; // tagIds as array
+  const userId = req.session.user.id;
+
+  // Loop through tagIds and insert ByteCards accordingly (if multiple tags are selected)
+  try {
+    for (const tagId of tagIds) {
+      await client.query(
+        `INSERT INTO "ByteCard".card (card_name, card_position, card_company, visibility, user_userid, tag_tagid) 
+         VALUES ($1, $2, $3, $4, $5, $6)`,
+        [cardName, cardPosition, cardCompany, visibility, userId, tagId]
+      );
+    }
+    console.log("ByteCard created successfully for user:", userId);
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.error("Error creating ByteCard:", error);
+    res.status(500).send("Error creating ByteCard");
+  }
+});
+
+
 
 
 

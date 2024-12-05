@@ -14,6 +14,7 @@ CREATE TABLE card (
     card_name     VARCHAR(100) NOT NULL,
     card_position VARCHAR(100) NOT NULL,
     card_company  VARCHAR(100) NOT NULL,
+    visibility    VARCHAR(1) NOT NULL,
     user_userid   INTEGER NOT NULL,
     tag_tagid     INTEGER NOT NULL
 );
