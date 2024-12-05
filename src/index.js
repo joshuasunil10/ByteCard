@@ -24,7 +24,7 @@ app.use(
 // Database client setup
 const client = new Client({
   user: "joshua",
-  host: "localhost",
+  host: "10.156.2.142",
   database: "postgres",
   password: "1234",
   port: 54321,
@@ -59,7 +59,48 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
+app.get("/carddetail",requireLogin, async (req, res) => {
+  console.log("Login page accessed. Current session:", req.session.user); 
 
+  res.render("carddetail");
+});
+
+
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+      console.log("Login attempt with email:", email); 
+
+      const result = await client.query('SELECT * FROM "ByteCard".user WHERE email = $1', [email]);
+      const user = result.rows[0];
+
+      if (!user) {
+          console.log("Login failed: Invalid email"); 
+          return res.status(400).send("Invalid email or password");
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+          console.log("Login failed: Incorrect password"); 
+          return res.status(400).send("Invalid email or password");
+      }
+
+      // Set session data
+      req.session.user = {
+          id: user.userid,  // Ensure the user ID is included in the session
+          name: user.name,
+          email: user.email,
+      };
+
+      console.log("Login successful. Session set:", req.session.user); 
+      res.redirect("/dashboard");
+  } catch (error) {
+      console.error("Error during login:", error); 
+      res.status(500).send("Server error");
+  }
+});
 
 
 app.get("/register", (req, res) => {
@@ -69,27 +110,107 @@ app.get("/register", (req, res) => {
 
 app.get("/search", async (req, res) => {
   try {
-    // Perform the database query
-    const result = await client.query(
-      `SELECT card_name, card_position, card_company, tagname 
-       FROM "ByteCard".card 
-       JOIN "ByteCard".tag 
-       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid`
-    );
-      
-    const cards = result.rows; // Extract rows from the query result
+    const query = `
+      SELECT card_name, card_position, card_company, tagname 
+      FROM "ByteCard".card 
+      JOIN "ByteCard".tag 
+      ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+    `;
 
-    console.log("Query Result:", cards); // Log to ensure data is fetched
+    const result = await client.query(query);
+    const cards = result.rows;
 
-    // Pass the cards to the search.ejs template
+    console.log("Loaded all cards:", cards);
+
+    res.render("search", { cards });
+  } catch (error) {
+    console.error("Error fetching all cards:", error);
+
+    res.render("search", { cards: [] });
+  }
+});
+
+app.post("/search", async (req, res) => {
+  try {
+    const searchQuery = req.body.query || "";
+    const column = req.body.column || "card_name";
+
+    const validColumns = ["card_name", "card_position", "card_company", "tagname"];
+    if (!validColumns.includes(column)) {
+      throw new Error("Invalid column selected");
+    }
+
+    let query;
+    let params;
+
+    if (searchQuery.trim() === "") {
+      query = `
+        SELECT card_name, card_position, card_company, tagname 
+        FROM "ByteCard".card 
+        JOIN "ByteCard".tag 
+        ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+      `;
+      params = [];
+    } else {
+      query = `
+        SELECT card_name, card_position, card_company, tagname 
+        FROM "ByteCard".card 
+        JOIN "ByteCard".tag 
+        ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+        WHERE ${column} ILIKE $1
+      `;
+      params = [`%${searchQuery}%`];
+    }
+
+    const result = await client.query(query, params);
+
+    const cards = result.rows;
+
+    console.log("Query Result:", cards);
+
     res.render("search", { cards });
   } catch (error) {
     console.error("Error fetching cards:", error);
 
-    // Pass an empty array to the template in case of an error
     res.render("search", { cards: [] });
   }
 });
+
+
+app.post("/search", async (req, res) => {
+  try {
+    const searchQuery = req.body.query || "";
+    const column = req.body.column || "card_name";
+
+    const validColumns = ["card_name", "card_position", "card_company", "tagname"];
+    if (!validColumns.includes(column)) {
+      throw new Error("Invalid column selected");
+    }
+
+    const query = `
+      SELECT card_name, card_position, card_company, tagname 
+      FROM "ByteCard".card 
+      JOIN "ByteCard".tag 
+      ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+      WHERE ${column} ILIKE $1
+    `;
+
+    const result = await client.query(query, [`%${searchQuery}%`]);
+
+    const cards = result.rows;
+
+    console.log("Filtered Query Result:", cards);
+
+    res.render("search", { cards });
+  } catch (error) {
+    console.error("Error fetching cards:", error);
+
+    res.render("search", { cards: [] });
+  }
+});
+
+
+
 
 
 
@@ -218,74 +339,6 @@ app.post("/delete-account", async (req, res) => {
 
 
 
-
-
-
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-      console.log("Login attempt with email:", email); 
-
-      const result = await client.query('SELECT * FROM "ByteCard".user WHERE email = $1', [email]);
-      const user = result.rows[0];
-
-      if (!user) {
-          console.log("Login failed: Invalid email"); 
-          return res.status(400).send("Invalid email or password");
-      }
-
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-          console.log("Login failed: Incorrect password"); 
-          return res.status(400).send("Invalid email or password");
-      }
-
-      // Set session data
-      req.session.user = {
-          id: user.userid,  // Ensure the user ID is included in the session
-          name: user.name,
-          email: user.email,
-      };
-
-      console.log("Login successful. Session set:", req.session.user); 
-      res.redirect("/dashboard");
-  } catch (error) {
-      console.error("Error during login:", error); 
-      res.status(500).send("Server error");
-  }
-});
-
-
-app.post("/register", async (req, res) => {
-  const { name, email, password, confirmpassword } = req.body;
-
-  if (password !== confirmpassword) {
-    return res.render("register", { error: "Passwords do not match", name, email });
-  }
-
-  try {
-    // Check if the user already exists
-    const userCheck = await client.query('SELECT * FROM "ByteCard".user WHERE email = $1', [email]);
-    if (userCheck.rows.length > 0) {
-      return res.render("register", { error: "Email already registered", name, email });
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Insert the user into the database
-    await client.query(
-      'INSERT INTO "ByteCard".user (name, email, password) VALUES ($1, $2, $3)',
-      [name, email, hashedPassword]
-    );
-
-    res.redirect("/login"); // Redirect to login page after successful registration
-  } catch (error) {
-    console.error(error);
-    res.render("register", { error: "Server error. Please try again later.", name, email });
-  }
-}); 
 
 
 
