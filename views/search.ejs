@@ -17,16 +17,28 @@
 
   <div class="container">
     <div class="search_text">Search for ByteCards</div>
-    <form action="/search" method="GET">
-        <input 
-            type="text" 
-            class="search-input" 
-            name="query" 
-            placeholder="Enter search query..." 
-            required 
-        />
-        <button type="submit" class="btn">Search</button>
+    <form action="/search" method="POST">
+      <input 
+        type="text" 
+        class="search-input" 
+        name="query" 
+        placeholder="Enter search query..." 
+        required 
+      />
+    
+      <label for="column">Search By:</label>
+      <select name="column" id="column" required>
+        <option value="card_name">Card Name</option>
+        <option value="card_position">Card Position</option>
+        <option value="card_company">Card Company</option>
+        <option value="tagname">Tag Name</option>
+      </select>
+    
+      <button type="submit" class="btn">Search</button>
     </form>
+    
+    
+    
     <div class="results-container">
       <ul class="search-results">
         <% if (cards && cards.length > 0) { %>

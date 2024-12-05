@@ -24,7 +24,7 @@ app.use(
 // Database client setup
 const client = new Client({
   user: "joshua",
-  host: "10.156.6.25",
+  host: "10.156.2.142",
   database: "postgres",
   password: "1234",
   port: 54321,
@@ -69,27 +69,68 @@ app.get("/register", (req, res) => {
 
 app.get("/search", async (req, res) => {
   try {
+    // Fetch all cards from the database
+    const query = `
+      SELECT card_name, card_position, card_company, tagname 
+      FROM "ByteCard".card 
+      JOIN "ByteCard".tag 
+      ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+    `;
+
+    const result = await client.query(query);
+    const cards = result.rows;
+
+    console.log("Loaded all cards:", cards);
+
+    // Pass all cards to the template
+    res.render("search", { cards });
+  } catch (error) {
+    console.error("Error fetching all cards:", error);
+
+    // Render the template with an empty array in case of error
+    res.render("search", { cards: [] });
+  }
+});
+
+
+app.post("/search", async (req, res) => {
+  try {
+    const searchQuery = req.body.query || ""; // Get the search query from the POST body
+    const column = req.body.column || "card_name"; // Get the selected column from the POST body
+
+    // Validate the column to prevent SQL injection
+    const validColumns = ["card_name", "card_position", "card_company", "tagname"];
+    if (!validColumns.includes(column)) {
+      throw new Error("Invalid column selected");
+    }
+
     // Perform the database query
-    const result = await client.query(
-      `SELECT card_name, card_position, card_company, tagname 
-       FROM "ByteCard".card 
-       JOIN "ByteCard".tag 
-       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid`
-    );
-      
-    const cards = result.rows; // Extract rows from the query result
+    const query = `
+      SELECT card_name, card_position, card_company, tagname 
+      FROM "ByteCard".card 
+      JOIN "ByteCard".tag 
+      ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+      WHERE ${column} ILIKE $1
+    `;
 
-    console.log("Query Result:", cards); // Log to ensure data is fetched
+    const result = await client.query(query, [`%${searchQuery}%`]);
 
-    // Pass the cards to the search.ejs template
+    const cards = result.rows;
+
+    console.log("Filtered Query Result:", cards);
+
+    // Pass the results to the template
     res.render("search", { cards });
   } catch (error) {
     console.error("Error fetching cards:", error);
 
-    // Pass an empty array to the template in case of an error
+    // Render the template with an empty array in case of error
     res.render("search", { cards: [] });
   }
 });
+
+
+
 
 
 
