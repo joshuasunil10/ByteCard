@@ -23,27 +23,28 @@
         class="search-input" 
         name="query" 
         placeholder="Enter search query..." 
-        required 
       />
-    
-      <label for="column">Search By:</label>
-      <select name="column" id="column" required>
-        <option value="card_name">Card Name</option>
-        <option value="card_position">Card Position</option>
-        <option value="card_company">Card Company</option>
-        <option value="tagname">Tag Name</option>
-      </select>
-    
+      
+      <div class="search-by-container">
+        <label for="column" class="search-by-label">Search By:</label>
+        <select name="column" id="column" class="search-by-select" required>
+          <option value="card_name">Name</option>
+          <option value="card_position">Position</option>
+          <option value="card_company">Company</option>
+          <option value="tagname">Tag</option>
+        </select>
+      </div>
+      
       <button type="submit" class="btn">Search</button>
     </form>
     
-    
+  
     
     <div class="results-container">
       <ul class="search-results">
         <% if (cards && cards.length > 0) { %>
           <% cards.forEach(function(card) { %>
-            <li class="card">
+            <li class="card" >
               <div class="card-header">
                 <span class="card-name"><%= card.card_name %></span>
                 <span class="card-brand">ByteCard</span>
@@ -54,7 +55,10 @@
               <div class="card-footer">
                 <span class="company-name"><%= card.card_company %></span>
                 <span class="card-industry"><%= card.tagname %></span>
+
+                <a href="/carddetail" class="nav-link">Detail</a>
               </div>
+              
             </li>
           <% }); %>
         <% } else { %>

@@ -2,8 +2,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background-color: #262626;
-  color: #f5f5f5;
+  background-color: #262626; /* Dark background */
+  color: #f5f5f5; /* Light text for contrast */
 }
 
 .header {
@@ -11,14 +11,14 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #292929;
+  background-color: #292929; /* Slightly lighter dark background */
   color: #f5f5f5;
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #fdfd54;
+  color: #fdfd54; /* Bright yellow for logo */
 }
 
 .nav {
@@ -46,7 +46,7 @@ body {
 }
 
 .search_text {
-  background-color: #444;
+  background-color: #444; /* Neutral background for search text */
   color: #fdfd54;
   padding: 1rem;
   border-radius: 10px;
@@ -70,10 +70,48 @@ body {
   color: #aaa;
 }
 
+.search-by-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.search-by-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fdfd54; /* Bright yellow for label */
+}
+
+.search-by-select {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #444; /* Neutral dark background */
+  color: #fdfd54; /* Bright yellow for text */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.search-by-select:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.search-by-select:focus {
+  outline: none;
+  box-shadow: 0 0 5px 2px rgba(253, 253, 84, 0.8); /* Highlight on focus */
+}
+
 .btn {
   align-self: center;
   display: inline-block;
-  background-color: #fdfd54;
+  background-color: #fdfd54; /* Bright yellow button */
   color: #000;
   border: none;
   border-radius: 20px;
@@ -106,16 +144,15 @@ form {
 
 .results-container {
   width: 90%;
-  background-color: #3b3b3b;
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 2rem auto;
 }
 
 .search-results {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Dynamically adjust columns */
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for multiple cards */
+  justify-content: center; /* Center content */
   gap: 1rem;
   list-style: none;
   padding: 0;
@@ -123,16 +160,16 @@ form {
 }
 
 .card {
-  background-color: #fdfd54;
+  background-color: #fdfd54; /* Bright yellow for cards */
   color: #000;
   padding: 1rem;
-  padding-left: 3rem;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.679);
   display: flex;
   flex-direction: column; /* Stack items vertically */
-  justify-content: space-between; /* Ensure the footer is pushed to the bottom */
-  height: 200px; /* Fixed height for uniformity */
+  justify-content: space-between;
+  max-width: 400px; /* Maximum width for cards */
+  width: 100%; /* Allow shrinking for smaller screens */
 }
 
 .card-header {
@@ -143,37 +180,35 @@ form {
 
 .card-name {
   font-size: 1.5rem;
-  text-shadow: 0 1px 3px rgb(146, 146, 146); /* Card shadow */
+  text-shadow: 0 1px 3px rgb(146, 146, 146);
   text-decoration: underline;
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 .card-brand {
   font-size: 1.5rem;
   color: #000;
-  text-shadow: 0 1px 8px rgb(0, 0, 0); /* Card shadow */
-  padding: .5rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 
 .card-position {
   margin: 1.5rem 0;
-  text-shadow: 0 1px 3px rgb(146, 146, 146); /* Card shadow */
+  text-shadow: 0 1px 3px rgb(146, 146, 146);
 }
 
 .card-footer {
   display: flex;
   justify-content: space-between; /* Space between footer items */
   font-size: 1.2rem;
-  text-shadow: 0 1px 3px rgb(146, 146, 146); /* Card shadow */
-  align-items: center; /* Center footer items vertically */
+  align-items: center;
   margin-top: auto; /* Push footer to the bottom of the card */
   padding-bottom: 2rem;
-  padding-right: 2rem;
 }
 
+.search-results li {
+  flex: 1 1 300px; /* Ensure cards take up at least 300px */
+}
 
-
-/* Hover Effects */
 .search-results li:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -183,7 +218,6 @@ form {
   transform: scale(0.95);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-
 
 .footer {
   background-color: #292929;
