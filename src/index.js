@@ -59,9 +59,8 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.get("/carddetail",requireLogin, async (req, res) => {
+app.get("/carddetail",requireLogin,(req, res) => {
   console.log("Login page accessed. Current session:", req.session.user); 
-
   res.render("carddetail");
 });
 
