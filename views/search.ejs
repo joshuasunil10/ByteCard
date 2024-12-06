@@ -50,26 +50,29 @@
       <ul class="search-results">
         <% if (cards && cards.length > 0) { %>
           <% cards.forEach(function(card) { %>
-            <li class="card">
-              <a href="/carddetail?id=<%= card.id %>" class="card-link">
-              <div class="card-header">
-                <span class="card-name"><%= card.card_name %></span>
-                <span class="card-brand">ByteCard</span>
-              </div>
-              <div class="card-body">
-                <div class="card-position"><%= card.card_position %></div>
-              </div>
-              <div class="card-footer">
-                <span class="company-name"><%= card.card_company %></span>
-                <span class="card-industry"><%= card.tagname %></span>
-              </div>
+            <li class="card" data-id="card.cardid">
+              <a href="/carddetail?id=<%= card.cardid %>" class="card-link">
+                <div class="card-header">
+                  <span class="card-name"><%= card.card_name %></span>
+                  <span class="card-brand">ByteCard</span>
+                </div>
+                <div class="card-body">
+                  <div class="card-position"><%= card.card_position %></div>
+                </div>
+                <div class="card-footer">
+                  <span class="company-name"><%= card.card_company %></span>
+                  <span class="card-industry"><%= card.tagname %></span>
+                </div>
+                <% console.log(card.cardid); %>
+              </a>
+              
             </li>
-            </a>
           <% }); %>
         <% } else { %>
           <li>No results found.</li>
         <% } %>
       </ul>
+      
     </div>
     
     

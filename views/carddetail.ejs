@@ -4,19 +4,22 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/carddetail.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Card Details</title>
 </head>
 <body>
     <header class="header">
-        <a class="logo" href="/"><div>ByteCard</div></a>
+        <a class="logo" href="/">ByteCard</a>
         <nav class="nav">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/login" class="nav-link">Login</a>
+            <a href="/search" class="nav-link">Discover</a>
         </nav>
     </header>
-
-    <div class="container">
+    <div class="details-container">
+        <div class="card-detail">
+            <h1 class="card-title"><%= card.card_name %></h1>
+            <p class="card-field"><strong>Position:</strong> <%= card.card_position %></p>
+            <p class="card-field"><strong>Company:</strong> <%= card.card_company %></p>
+            <p class="card-field"><strong>Tag:</strong> <%= card.tagname %></p>
+        </div>
     </div>
-
 </body>
 </html>

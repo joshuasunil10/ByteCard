@@ -130,12 +130,6 @@ app.post("/createByteCard", requireLogin, async (req, res) => {
   }
 });
 
-app.get("/carddetail",requireLogin,(req, res) => {
-  console.log("Login page accessed. Current session:", req.session.user); 
-  res.render("carddetail");
-});
-
-
 app.get("/login", (req, res) => {
   if (req.session.user) {
     return res.redirect("/dashboard");
@@ -221,7 +215,7 @@ app.post("/register", async (req, res) => {
 app.get("/search", async (req, res) => {
   try {
     const query = `
-      SELECT card_name, card_position, card_company, tagname 
+      SELECT cardid, card_name, card_position, card_company, tagname 
       FROM "ByteCard".card 
       JOIN "ByteCard".tag 
       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
@@ -259,7 +253,7 @@ app.post("/search", async (req, res) => {
 
     if (searchQuery.trim() === "") {
       query = `
-        SELECT card_name, card_position, card_company, tagname 
+        SELECT cardid, card_name, card_position, card_company, tagname 
         FROM "ByteCard".card 
         JOIN "ByteCard".tag 
         ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
@@ -269,7 +263,7 @@ app.post("/search", async (req, res) => {
       params = [];
     } else {
       query = `
-        SELECT card_name, card_position, card_company, tagname 
+        SELECT cardid, card_name, card_position, card_company, tagname 
         FROM "ByteCard".card 
         JOIN "ByteCard".tag 
         ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
@@ -307,7 +301,7 @@ app.post("/search", async (req, res) => {
     }
 
     const query = `
-      SELECT card_name, card_position, card_company, tagname 
+      SELECT cardid, card_name, card_position, card_company, tagname 
       FROM "ByteCard".card 
       JOIN "ByteCard".tag 
       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
@@ -327,6 +321,37 @@ app.post("/search", async (req, res) => {
     res.render("search", { cards: [] });
   }
 });
+
+app.get("/carddetail", async (req, res) => {
+  try {
+    const cardId = req.query.id; // Correctly retrieve the card ID
+    if (!cardId) {
+      return res.status(400).send("Card ID is required");
+    }
+
+    const query = `
+      SELECT cardid, card_name, card_position, card_company, tagname
+      FROM "ByteCard".card
+      JOIN "ByteCard".tag
+      ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+      WHERE "ByteCard".card.cardid = $1
+    `;
+    const result = await client.query(query, [cardId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).send("Card not found");
+    }
+
+    const card = result.rows[0];
+    res.render("carddetail", { card }); // Pass the card data to the template
+  } catch (error) {
+    console.error("Error fetching card details:", error);
+    res.status(500).send("Server error");
+  }
+});
+
+
+
 
 
 
