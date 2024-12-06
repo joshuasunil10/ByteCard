@@ -2,9 +2,11 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: Poppins, sans-serif;
+  font-family: 'Poppins', sans-serif;
   background-color: #3a3a3a; /* Dark background */
   color: #f5f5f5; /* Light text color */
+  box-sizing: border-box;
+  line-height: 1.6;
 }
 
 /* Header */
@@ -12,36 +14,35 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 15px 20px;
   background-color: #2c2c2c;
-  color: #3f3f3f;
+  color: #ffffff;
 }
 
 .logo {
-  font-size: 1.8rem; /* Slightly larger logo for better visibility */
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #ff8080; /* Bright yellow color */
+  color: #ff8080;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  text-decoration: none;
 }
 
-.card {
-  background-color: #ff5d5d;
-  color: #000000;
-  padding: 20px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  width: 200px;
-  align-items: center;
+.logo:hover {
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .nav {
   display: flex;
-  gap: 20px;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .nav-link {
   color: #ffffff;
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover {
@@ -49,75 +50,147 @@ body {
   color: #ff6060;
 }
 
-/* Main Content */
+/* Main Container */
 .main-container {
-  margin: 100px 20px 20px 20px; /* Adjusted for consistent margin on all sides */
+  margin: 100px 20px 20px;
+  text-align: center;
 }
 
 h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-  color: #ffffff;
+  margin-top: 10px;
+  font-size: 2rem;
+}
+
+span {
+  color: #f66565;
+
 }
 
 h2 {
   font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #f7f7f7;
+  margin-bottom: 15px;
 }
 
-.delete-btn {
-  background-color: #fdff93;
-  color: #000000;
-  padding: 10px 20px;
+/* Results Container */
+.results-container {
+  width: 90%;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 2rem auto;
+  background-color: #2c2c2c00;
+}
+
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  background-color: #fdfd54; /* Bright yellow for cards */
+  color: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 400px;
+  width: 100%;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.card-name {
+  font-size: 1.4rem;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+
+}
+
+.card-brand {
+  font-size: 1.2rem;
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+
+.card-position {
+  display: flex;
+  margin: 1rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.card-name{
+  color : rgb(0, 0, 0);
+}
+
+.company-name {
+  float: left;
+  color: #ff3737;
+}
+
+.card-industry{
+  float: right;
+  color: blue;
+}
+
+
+
+.btn {
+  align-self: center;
+  background-color: #fdfd54;
+  color: #000;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.create-btn {
-  background-color: #ff3737;
-  color: #000000;
+  border-radius: 20px;
   padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
   cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.text{
-  color: rgb(233, 125, 125);
+.btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
-.delete-btn:hover {
-  background-color: #ffe553; /* Darker red when hovered */
-}
-
-.create-btn:hover {
-  background-color: #ff5d5d; /* Darker red when hovered */
-}
-
-/* Modal container */
+/* Modal Container */
 .modal {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* Modal content */
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
+  background-color: #232323;
+  margin: 10% auto;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  border-radius: 10px;
+  width: 90%;
   max-width: 400px;
+  color: #f5f5f5;
+  text-align: left;
 }
 
 .modal-actions {
@@ -126,13 +199,59 @@ h2 {
   margin-top: 15px;
 }
 
+/* Forms */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #292929;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+  color: #ffffff;
+}
+
+form div {
+  margin-bottom: 15px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+form input[type="text"],
+form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+form button {
+  background-color: #ff3737;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #ff5d5d;
+}
 
 /* Footer */
 .footer {
   background-color: #292929;
   color: #ffffff;
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -142,12 +261,18 @@ h2 {
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
   }
 
   .nav {
     flex-direction: column;
+    align-items: center;
     gap: 10px;
+  }
+
+  .card {
+    max-width: 100%;
   }
 
   h1 {
@@ -157,16 +282,11 @@ h2 {
   h2 {
     font-size: 1.2rem;
   }
-
-  .delete-btn {
-    padding: 8px 16px;
-    font-size: 1rem;
-  }
 }
 
 @media (max-width: 480px) {
   .logo {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   .nav-link {
@@ -174,15 +294,14 @@ h2 {
   }
 
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 
   h2 {
     font-size: 1rem;
   }
 
-  .delete-btn {
-    width: 100%; /* Full-width delete button on small screens */
-    padding: 12px;
+  .btn {
+    font-size: 0.9rem;
   }
 }

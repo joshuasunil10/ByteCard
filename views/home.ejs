@@ -12,10 +12,15 @@
 </head>
 <body>
   <header class="header">
-    <div class="logo">ByteCard</div>
+    <a class="logo" href="/"><div>ByteCard</div></a>
     <nav class="nav">
-        <a href="/search" class="nav-link">Discover</a>
+      <a href="/search" class="nav-link">Discover</a>
+      <% if (user) { %>
+        <span class="nav-link">Welcome, <%= user.name %></span>
+        <a href="/logout" class="nav-link">Logout</a>
+      <% } else { %>
         <a href="/login" class="nav-link">Login</a>
+      <% } %>
     </nav>
   </header>
 

@@ -15,33 +15,49 @@
   </head>
   <body>
     <header class="header">
-      <div class="logo">ByteCard</div>
+      <a class="logo" href="/"><div>ByteCard</div></a>
       <nav class="nav">
         <a href="/search" class="nav-link">Discover</a>
-        <a href="/logout" class="nav-link">Logout</a>
+        <% if (user) { %>
+          <span class="nav-link">Welcome, <%= user.name %></span>
+          <a href="/logout" class="nav-link">Logout</a>
+        <% } else { %>
+          <a href="/login" class="nav-link">Login</a>
+        <% } %>
       </nav>
     </header>
 
     <main class="main-container">
       <h1>Welcome <span class="text"><%= user.name %>!</span></h1>
       <h2>Your ByteCards</h2>
-
-      <!-- Cards for ByteCards (example) -->
-      <div class="cards-container">
-        <!-- Example ByteCard -->
-        <div class="card">
-          <h3>ByteCard 1</h3>
-          <p>Details about ByteCard 1...</p>
+      <a href="/addcard"
+        ><button id="createBtn" class="btn">Create a ByteCard +</button></a
+      >
+      <div class="card-container">
+        <div class="results-container">
+          <ul class="search-results">
+            <% if (cards && cards.length > 0) { %> <%
+            cards.forEach(function(card) { %>
+            <li class="card" data-id="<%= card.id %>">
+              <div class="card-header">
+                <span class="card-name"><%= card.card_name %></span>
+                <span class="card-brand">ByteCard</span>
+              </div>
+              <div class="card-body">
+                <div class="card-position"><%= card.card_position %></div>
+              </div>
+              <div class="card-footer">
+                <span class="company-name"><%= card.card_company %></span>
+                <span class="card-industry"><%= card.tagname %></span>
+              </div>
+             </li>
+            <% }); %> <% } else { %>
+            <li>
+              You don't have any cards - press the + button to create one!
+            </li>
+            <% } %>
+          </ul>
         </div>
-        <div class="card">
-          <h3>ByteCard 2</h3>
-          <p>Details about ByteCard 2...</p>
-        </div>
-
-        <button id="create" class="btn create-btn">+</button>
-        <br />
-        <br />
-        <!-- Add more ByteCards here -->
       </div>
 
       <h2>Account Settings</h2>
@@ -67,61 +83,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Modal for Card Creation -->
-      <div id="createCardModal" class="modal">
-        <div class="modal-content">
-          <h2>Create New ByteCard</h2>
-
-          <!-- Form for creating a ByteCard -->
-          <form id="createCardForm">
-            <label for="cardName">Name on Card</label>
-            <input
-              type="text"
-              id="cardName"
-              name="cardName"
-              placeholder="Enter ByteCard name"
-              required
-            /><br />
-
-            <label for="cardPosition">Position</label>
-            <input
-              type="text"
-              id="cardPosition"
-              name="cardPosition"
-              placeholder="Enter ByteCard position"
-              required
-            /><br />
-
-            <label for="cardCompany">Company</label>
-            <input
-              type="text"
-              id="cardCompany"
-              name="cardCompany"
-              placeholder="Enter ByteCard company"
-              required
-            /><br />
-
-            <label for="tagId">Select Tag</label>
-            <select id="tagId" name="tagId">
-              <option value="1">Tech</option>
-              <option value="2">Education</option>
-              <option value="3">Finance</option>
-              <option value="4">Healthcare</option>
-              <option value="5">Retail</option>
-              <option value="6">Manufacturing</option>
-              <option value="7">Hospitality</option>
-              <option value="8">Transportation</option>
-              <option value="9">Real Estate</option>
-              <option value="10">Entertainment</option>
-            </select><br />
-
-            <button type="submit">Create ByteCard</button>
-          </form>
-          <!-- Added Cancel Button for the Create ByteCard Modal -->
-          <button id="cancelCreateCardBtn" class="btn cancel-btn">Cancel</button>
-        </div>
-      </div>
     </main>
 
     <footer class="footer">ByteCard - 2024</footer>
@@ -134,14 +95,6 @@
       const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
       const passwordInput = document.getElementById("passwordInput");
 
-      // Get elements for card creation modal
-      const createBtn = document.getElementById("create");
-      const createCardModal = document.getElementById("createCardModal");
-      const cancelCreateCardBtn = document.getElementById(
-        "cancelCreateCardBtn"
-      ); // Added cancel button for card creation modal
-      const createCardForm = document.getElementById("createCardForm");
-
       // Show the delete modal when the delete button is clicked
       deleteBtn.addEventListener("click", () => {
         deleteModal.style.display = "flex"; // Show the modal
@@ -152,6 +105,12 @@
       cancelDeleteBtn.addEventListener("click", () => {
         deleteModal.style.display = "none"; // Hide the modal
         deleteBtn.style.display = "block"; // Show the delete button again
+      });
+
+      // Close the delete modal when the cancel button is clicked
+      cardcancelDeleteBtn.addEventListener("click", () => {
+        carddeleteModal.style.display = "none"; // Hide the modal
+        carddeleteBtn.style.display = "block"; // Show the delete button again
       });
 
       // Handle account deletion when confirm is clicked
@@ -179,58 +138,6 @@
             window.location.href = "/login"; // Redirect to login page after deletion
           } else {
             alert(result.message || "Error deleting account.");
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          alert("An error occurred. Please try again.");
-        }
-      });
-
-      // Show the card creation modal when the create button is clicked
-      createBtn.addEventListener("click", () => {
-        createCardModal.style.display = "flex"; // Show the modal
-      });
-
-      // Close the card creation modal when the cancel button is clicked
-      cancelCreateCardBtn.addEventListener("click", () => {
-        createCardModal.style.display = "none"; // Hide the modal
-      });
-
-      // Handle card creation when the form is submitted
-      createCardForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const cardName = document.getElementById("cardName").value;
-        const cardPosition = document.getElementById("cardPosition").value;
-        const cardCompany = document.getElementById("cardCompany").value;
-        const cardTag = document.getElementById("tagId").value; // Make sure this input is the one for tag selection
-
-        if (!cardName || !cardPosition || !cardCompany || !cardTag) {
-          alert("All fields are required.");
-          return;
-        }
-
-        try {
-          const response = await fetch("/createByteCard", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              cardName,
-              cardPosition,
-              cardCompany,
-              cardTag,
-            }),
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            alert("Card created successfully.");
-            window.location.reload(); // Reload the page to display the new card
-          } else {
-            alert(result.message || "Error creating card.");
           }
         } catch (error) {
           console.error("Error:", error);

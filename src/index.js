@@ -24,7 +24,7 @@ app.use(
 // Database client setup
 const client = new Client({
   user: "joshua",
-  host: "10.156.2.142",
+  host: "localhost",
   database: "postgres",
   password: "1234",
   port: 54321,
@@ -49,14 +49,84 @@ app.get("/", (req, res) => {
   res.render("home", { user: req.session.user });
 });
 
-app.get("/dashboard", requireLogin, (req, res) => {
-  console.log("Dashboard accessed. Current session:", req.session.user); 
-  res.render("dashboard", { user: req.session.user }); 
+app.get("/dashboard", requireLogin, async (req, res) => {
+  try {
+    const result = await client.query('SELECT c.card_name, c.card_position, c.card_company, t.tagname FROM "ByteCard".card c JOIN "ByteCard".tag t ON c.tag_tagid = t.tagid WHERE c.user_userid = $1', [req.session.user.id]);
+    const cards = result.rows;
+    res.render("dashboard", { user: req.session.user, cards });
+  } catch (error) {
+    console.error("Error fetching cards:", error);
+    res.render("dashboard", { user: req.session.user, cards: [] });
+  }
 });
+
+app.delete("/delete-card/:id", requireLogin, async (req, res) => {
+  const cardId = req.params.id;
+  const userId = req.session.user.id;
+
+  // Validate card ID
+  if (!/^\d+$/.test(cardId)) {
+    return res.status(400).json({ message: "Invalid card ID." });
+  }
+
+  try {
+    // Execute deletion query
+    const result = await client.query(
+      'DELETE FROM "ByteCard".card WHERE id = $1 AND user_userid = $2',
+      [cardId, userId]
+    );
+
+    // Check if any row was deleted
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Card not found or unauthorized action." });
+    }
+
+    // Respond with success
+    res.status(200).json({ message: "Card deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting card:", error);
+    res.status(500).json({ message: "Failed to delete the card. Please try again later." });
+  }
+});
+
 
 app.get("/login", (req, res) => {
   console.log("Login page accessed. Current session:", req.session.user); 
   res.render("login");
+});
+
+
+app.get("/addcard", requireLogin, async (req, res) => {
+  try {
+    const result = await client.query('SELECT tagid, tagname FROM "ByteCard".tag');
+    const tags = result.rows; // Fetch available tags
+    res.render("addCard", { user: req.session.user, tags });
+  } catch (error) {
+    console.error("Error fetching tags:", error);
+    res.render("addCard", { user: req.session.user, tags: [] }); // Pass an empty array in case of error
+  }
+});
+
+
+app.post("/createByteCard", requireLogin, async (req, res) => {
+  const { cardName, cardPosition, cardCompany, visibility, tagId } = req.body;
+  const userId = req.session.user.id;
+
+  // Set visibility to "T" if checked, otherwise "F"
+  const visibilityValue = visibility === 'yes' ? 'T' : 'F';
+
+  try {
+    await client.query(
+      `INSERT INTO "ByteCard".card (card_name, card_position, card_company, visibility, user_userid, tag_tagid) 
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [cardName, cardPosition, cardCompany, visibilityValue, userId, tagId]
+    );
+    console.log("ByteCard created successfully for user:", userId);
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.error("Error creating ByteCard:", error);
+    res.status(500).send("Error creating ByteCard");
+  }
 });
 
 app.get("/carddetail",requireLogin,(req, res) => {
@@ -64,6 +134,14 @@ app.get("/carddetail",requireLogin,(req, res) => {
   res.render("carddetail");
 });
 
+
+app.get("/login", (req, res) => {
+  if (req.session.user) {
+    return res.redirect("/dashboard");
+  }
+  console.log("Login page accessed. Current session:", req.session.user); 
+  res.render("login");
+});
 
 
 app.post("/login", async (req, res) => {
@@ -106,6 +184,38 @@ app.get("/register", (req, res) => {
   console.log("Register page accessed. Current session:", req.session.user); 
   res.render("register");
 });
+
+app.post("/register", async (req, res) => {
+  const { name, email, password, confirmpassword } = req.body;
+
+  if (password !== confirmpassword) {
+    return res.send(`<script>alert("Passwords do not match"); window.location.href = "/register";</script>`);
+  }
+
+  try {
+    // Check if the user already exists
+    const userCheck = await client.query('SELECT * FROM "ByteCard".user WHERE email = $1', [email]);
+    if (userCheck.rows.length > 0) {
+      return res.send(`<script>alert("Email already registered"); window.location.href = "/register";</script>`);
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Insert the user into the database
+    await client.query(
+      'INSERT INTO "ByteCard".user (name, email, password) VALUES ($1, $2, $3)',
+      [name, email, hashedPassword]
+      
+    );
+    return res.send(`<script>alert("Account Successfully Made"); window.location.href = "/login";</script>`);
+    res.redirect("/login"); // Redirect to login page after successful registration
+  } catch (error) {
+    console.error(error);
+    res.render("register", { error: "Server error. Please try again later.", name, email });
+  }
+}); 
+
 
 app.get("/search", async (req, res) => {
   try {
@@ -391,9 +501,52 @@ app.post("/createByteCard", requireLogin, async (req, res) => {
   }
 });
 
+app.get("/home", (req, res) => {
+  res.render("home", { user: req.session.user });
+});
 
+app.get("/search", (req, res) => {
+  res.render("search", { user: req.session.user });
+});
 
+app.get("/addcard", requireLogin, async (req, res) => {
+  try {
+    const result = await client.query('SELECT tagid, tagname FROM "ByteCard".tag');
+    const tags = result.rows;
+    res.render("addCard", { user: req.session.user, tags });
+  } catch (error) {
+    console.error("Error fetching tags:", error);
+    res.render("addCard", { user: req.session.user, tags: [] });
+  }
+});
 
+app.get("/carddetail", requireLogin, (req, res) => {
+  res.render("carddetail", { user: req.session.user });
+});
+
+app.get("/login", (req, res) => {
+  res.render("login", { user: req.session.user });
+});
+
+app.get("/register", (req, res) => {
+  res.render("register", { user: req.session.user });
+});
+
+app.get("/logout", (req, res) => {
+  res.render("logout", { user: req.session.user });
+});
+
+app.get("/forgot-password", (req, res) => {
+  res.render("forgot-password", { user: req.session.user });
+});
+
+app.get("/reset-password", (req, res) => {
+  res.render("reset-password", { user: req.session.user });
+});
+
+app.get("/users", (req, res) => {
+  res.render("users", { user: req.session.user });
+});
 
 // Start the server
 app.listen(3000, () => {
