@@ -42,6 +42,14 @@
           <input type="text" id="company" name="cardCompany" required />
         </div>
         <div>
+          <label for="description">Enter description</label>
+          <input type="text" id="description" name="cardDescription" required />
+        </div>
+        <div>
+          <label for="contact">Enter contact</label>
+          <input type="tel" id="contact" name="cardContact" required />
+        </div>
+        <div>
           <label for="items">Select Tag:</label>
           <select id="items" name="tagId" required>
             <% tags.forEach(function(tag) { %>

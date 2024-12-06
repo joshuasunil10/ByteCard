@@ -110,7 +110,7 @@ app.get("/addcard", requireLogin, async (req, res) => {
 
 
 app.post("/createByteCard", requireLogin, async (req, res) => {
-  const { cardName, cardPosition, cardCompany, visibility, tagId } = req.body;
+  const { cardName, cardPosition, cardCompany, cardDescription, cardContact, visibility, tagId } = req.body;
   const userId = req.session.user.id;
 
   // Set visibility to "T" if checked, otherwise "F"
@@ -118,9 +118,9 @@ app.post("/createByteCard", requireLogin, async (req, res) => {
 
   try {
     await client.query(
-      `INSERT INTO "ByteCard".card (card_name, card_position, card_company, visibility, user_userid, tag_tagid) 
-       VALUES ($1, $2, $3, $4, $5, $6)`,
-      [cardName, cardPosition, cardCompany, visibilityValue, userId, tagId]
+      `INSERT INTO "ByteCard".card (card_name, card_position, card_company, visibility, card_description, card_contact, user_userid, tag_tagid) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [cardName, cardPosition, cardCompany, visibilityValue,  cardDescription, cardContact, userId, tagId]
     );
     console.log("ByteCard created successfully for user:", userId);
     res.redirect("/dashboard");
@@ -219,7 +219,7 @@ app.get("/search", async (req, res) => {
       FROM "ByteCard".card 
       JOIN "ByteCard".tag 
       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-      WHERE visibility = 'T'
+      WHERE visibility = 'Y'
     `;
 
     const result = await client.query(query);
@@ -257,7 +257,7 @@ app.post("/search", async (req, res) => {
         FROM "ByteCard".card 
         JOIN "ByteCard".tag 
         ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-        WHERE visibility = 'T'
+        WHERE visibility = 'Y'
 
       `;
       params = [];
@@ -267,7 +267,7 @@ app.post("/search", async (req, res) => {
         FROM "ByteCard".card 
         JOIN "ByteCard".tag 
         ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-        WHERE ${column} ILIKE $1 AND visibility = 'T'
+        WHERE ${column} ILIKE $1 AND visibility = 'Y'
 
       `;
       params = [`%${searchQuery}%`];
@@ -304,7 +304,7 @@ app.post("/search", async (req, res) => {
       FROM "ByteCard".card 
       JOIN "ByteCard".tag 
       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-      WHERE ${column} ILIKE $1 AND visibility = 'T'
+      WHERE ${column} ILIKE $1 AND visibility = 'Y'
     `;
 
     const result = await client.query(query, [`%${searchQuery}%`]);
@@ -329,7 +329,7 @@ app.get("/carddetail", async (req, res) => {
     }
 
     const query = `
-      SELECT cardid, card_name, card_position, card_company, tagname
+      SELECT cardid, card_name, card_position, card_company, card_description,card_contact, tagname
       FROM "ByteCard".card
       JOIN "ByteCard".tag
       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
