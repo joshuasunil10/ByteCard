@@ -1,11 +1,4 @@
-/* General Styles */
-:root {
-    --primary-color: white;
-    --secondary-color: #45A29E;
-    --background-color: #1F2833;
-    --darker-background-color: #014147;
-}
-
+@import url("generic.css");
 
 body {
     font-family: Poppins, Arial, sans-serif;

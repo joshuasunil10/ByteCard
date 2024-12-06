@@ -1,18 +1,15 @@
-/* Global styles */
+@import url("generic.css");
+
 *,
 *::before,
 *::after {
-    box-sizing: border-box; /* Include padding and borders in element's width/height */
+  box-sizing: border-box;
 }
 
 :root {
-  --primary-color: #ffffff; /* White for text */
-  --secondary-color: #45A29E; /* Teal for highlights */
-  --background-color: #1F2833; /* Dark grey-blue for background */
-  --darker-background-color: #0B3D4D; /* Slightly darker teal */
-  --card-color-1: #4c94b2; /* Dark Blue */
-  --card-color-2: #406760; /* Orange */
-  --card-color-3: #49575b; /* Pink */
+  --card-color-1: #4c94b2;
+  --card-color-2: #406760;
+  --card-color-3: #49575b;
 }
 
 body {
@@ -21,55 +18,6 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: var(--background-color);
   color: var(--primary-color);
-}
-
-/* Header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: var(--darker-background-color);
-    color: white;
-    position: sticky; /* Makes the header sticky */
-    top: 0; /* Keeps it at the top of the page */
-    z-index: 1000;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.header.sticky {
-    background-color: #333333;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    text-decoration: none;
-  }
-  
-  .logo:hover {
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-
-.nav {
-    display: flex;
-    gap: 1rem;
-}
-
-.nav-link {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.nav-link:hover {
-    
-    color: var(--secondary-color);
 }
 
 .container {
@@ -82,9 +30,9 @@ body {
 }
 
 .search_text {
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    margin: 0;
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin: 0;
 }
 
 .search-input {
@@ -95,7 +43,7 @@ body {
   border: none;
   font-size: 1rem;
   margin-bottom: 1rem;
-  border: 3px solid var(--secondary-color); 
+  border: 3px solid var(--secondary-color);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -113,7 +61,8 @@ body {
 .search-by-label {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #fdfd54; /* Bright yellow for label */
+  color: #fdfd54;
+  /* Bright yellow for label */
 }
 
 .search-by-select {
@@ -124,7 +73,8 @@ body {
   border-radius: 5px;
   border: none;
   background-color: white;
-  color: #000000; /* Bright yellow for text */
+  color: #000000;
+  /* Bright yellow for text */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -170,8 +120,10 @@ form {
 
 .search-results {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping for multiple cards */
-  justify-content: center; /* Center content */
+  flex-wrap: wrap;
+  /* Allow wrapping for multiple cards */
+  justify-content: center;
+  /* Center content */
   gap: 1rem;
   list-style: none;
   padding: 0;
@@ -180,15 +132,20 @@ form {
 
 /* Ensure the entire card is clickable */
 .card-link {
-  text-decoration: none; /* Remove default underline */
-  color: inherit; /* Inherit text color for the link */
-  display: block; /* Ensure the link fills the entire card */
+  text-decoration: none;
+  /* Remove default underline */
+  color: inherit;
+  /* Inherit text color for the link */
+  display: block;
+  /* Ensure the link fills the entire card */
 }
 
 /* Add hover effect for the card */
 .card-link:hover .card {
-  transform: scale(1.05); /* Slightly enlarge the card on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Highlight effect */
+  transform: scale(1.05);
+  /* Slightly enlarge the card on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  /* Highlight effect */
 }
 
 .card {
@@ -212,33 +169,40 @@ form {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.search-results li{
-  width:10px;
+.search-results li {
+  width: 10px;
 }
+
 /* Cycle through 3 colors using nth-child */
 .search-results li:nth-child(1) .card {
-  background-color: var(--card-color-1); /* Blue */
+  background-color: var(--card-color-1);
+  /* Blue */
 }
 
 .search-results li:nth-child(2) .card {
-  background-color: var(--card-color-2); /* Orange */
+  background-color: var(--card-color-2);
+  /* Orange */
 }
 
 .search-results li:nth-child(3) .card {
-  background-color: var(--card-color-3); /* Pink */
+  background-color: var(--card-color-3);
+  /* Pink */
 }
 
 /* Repeat colors for subsequent cards */
 .search-results li:nth-child(3n+1) .card {
-  background-color: var(--card-color-1); /* Blue */
+  background-color: var(--card-color-1);
+  /* Blue */
 }
 
 .search-results li:nth-child(3n+2) .card {
-  background-color: var(--card-color-2); /* Orange */
+  background-color: var(--card-color-2);
+  /* Orange */
 }
 
 .search-results li:nth-child(3n+3) .card {
-  background-color: var(--card-color-3); /* Pink */
+  background-color: var(--card-color-3);
+  /* Pink */
 }
 
 
@@ -268,15 +232,18 @@ form {
 
 .card-footer {
   display: flex;
-  justify-content: space-between; /* Space between footer items */
+  justify-content: space-between;
+  /* Space between footer items */
   font-size: 1.2rem;
   align-items: center;
-  margin-top: auto; /* Push footer to the bottom of the card */
+  margin-top: auto;
+  /* Push footer to the bottom of the card */
   padding-bottom: 2rem;
 }
 
 .search-results li {
-  flex: 1 1 300px; /* Ensure cards take up at least 300px */
+  flex: 1 1 300px;
+  /* Ensure cards take up at least 300px */
 }
 
 .search-results li:hover {
@@ -287,14 +254,4 @@ form {
 .search-results li:active {
   transform: scale(0.95);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.footer {
-  background-color: #292929;
-  color: #fdfd54;
-  text-align: center;
-  padding: 1rem;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
 }

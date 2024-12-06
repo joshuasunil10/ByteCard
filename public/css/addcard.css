@@ -1,3 +1,4 @@
+@import url("generic.css");
 /* Global styles */
 *,
 *::before,
@@ -5,12 +6,7 @@
     box-sizing: border-box; /* Include padding and borders in element's width/height */
 }
 
-:root {
-    --primary-color: white;
-    --secondary-color: #45A29E;
-    --background-color: #1F2833;
-    --darker-background-color: #014147;
-}
+
 
 body {
     margin: 0;
@@ -196,18 +192,7 @@ body {
   form button:hover {
     background-color: #0056b3;
   }
-  
-  
-  /* Footer */
-  .footer {
-    background-color: #292929;
-    color: #ffffff;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
+
   
   /* Responsive Design */
   @media (max-width: 768px) {

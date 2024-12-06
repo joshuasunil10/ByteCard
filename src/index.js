@@ -24,11 +24,10 @@ app.use(
 // Database client setup
 const client = new Client({
   user: "joshua",
-  // host: "localhost",
-  host: "10.156.2.142",
+  host: "localhost",
   database: "postgres",
   password: "1234",
-  port: 54321,
+  port: 5432,
 });
 
 client.connect()
@@ -92,6 +91,9 @@ app.delete("/delete-card/:id", requireLogin, async (req, res) => {
 
 
 app.get("/login", (req, res) => {
+  if (req.session.user) {
+    return res.redirect("/dashboard");
+  }
   console.log("Login page accessed. Current session:", req.session.user); 
   res.render("login");
 });
@@ -107,37 +109,6 @@ app.get("/addcard", requireLogin, async (req, res) => {
     res.render("addCard", { user: req.session.user, tags: [] }); // Pass an empty array in case of error
   }
 });
-
-
-app.post("/createByteCard", requireLogin, async (req, res) => {
-  const { cardName, cardPosition, cardCompany, cardDescription, cardContact, visibility, tagId } = req.body;
-  const userId = req.session.user.id;
-
-  // Set visibility to "Y" if checked, otherwise "N"
-  const visibilityValue = visibility === 'yes' ? 'Y' : 'N';
-
-  try {
-    await client.query(
-      `INSERT INTO "ByteCard".card (card_name, card_position, card_company, visibility, card_description, card_contact, user_userid, tag_tagid) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
-      [cardName, cardPosition, cardCompany, visibilityValue,  cardDescription, cardContact, userId, tagId]
-    );
-    console.log("ByteCard created successfully for user:", userId);
-    res.redirect("/dashboard");
-  } catch (error) {
-    console.error("Error creating ByteCard:", error);
-    res.status(500).send("Error creating ByteCard");
-  }
-});
-
-app.get("/login", (req, res) => {
-  if (req.session.user) {
-    return res.redirect("/dashboard");
-  }
-  console.log("Login page accessed. Current session:", req.session.user); 
-  res.render("login");
-});
-
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -211,113 +182,64 @@ app.post("/register", async (req, res) => {
   }
 }); 
 
+app.post("/createByteCard", requireLogin, async (req, res) => {
+  const { cardName, cardPosition, cardCompany, cardDescription, cardContact, visibility, tagId } = req.body;
+  const userId = req.session.user.id;
 
+  // Set visibility to "Y" if checked, otherwise "N"
+  const visibilityValue = visibility === 'yes' ? 'Y' : 'N';
+
+  try {
+    await client.query(
+      `INSERT INTO "ByteCard".card (card_name, card_position, card_company, visibility, card_description, card_contact, user_userid, tag_tagid) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [cardName, cardPosition, cardCompany, visibilityValue,  cardDescription, cardContact, userId, tagId]
+    );
+    console.log("ByteCard created successfully for user:", userId);
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.error("Error creating ByteCard:", error);
+    res.status(500).send("Error creating ByteCard");
+  }
+});
+
+
+
+// Search Page
 app.get("/search", async (req, res) => {
   try {
-    const query = `
-      SELECT cardid, card_name, card_position, card_company, tagname 
-      FROM "ByteCard".card 
-      JOIN "ByteCard".tag 
-      ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-      WHERE visibility = 'Y'
-    `;
-
-    const result = await client.query(query);
-    const cards = result.rows;
-
-    console.log("Loaded all cards:", cards);
-
-    // Pass user and cards to the template
-    res.render("search", { user: req.session.user, cards });
+    const result = await client.query(
+      `SELECT c.cardid, c.card_name, c.card_position, c.card_company, t.tagname 
+       FROM "ByteCard".card c 
+       JOIN "ByteCard".tag t 
+       ON c.tag_tagid = t.tagid 
+       WHERE c.visibility = 'Y'`
+    );
+    res.render("search", { user: req.session.user, cards: result.rows });
   } catch (error) {
-    console.error("Error fetching all cards:", error);
-
-    // Pass an empty array and user in case of error
+    console.error("Error fetching cards:", error);
     res.render("search", { user: req.session.user, cards: [] });
   }
 });
 
-
 app.post("/search", async (req, res) => {
+  const { query, column } = req.body;
+  const validColumns = ["card_name", "card_position", "card_company", "tagname"];
+  if (!validColumns.includes(column)) return res.status(400).send("Invalid column");
+
   try {
-    const searchQuery = req.body.query || "";
-    const column = req.body.column || "card_name";
-
-    const validColumns = ["card_name", "card_position", "card_company", "tagname"];
-    if (!validColumns.includes(column)) {
-      throw new Error("Invalid column selected");
-    }
-
-    let query;
-    let params;
-
-    if (searchQuery.trim() === "") {
-      query = `
-        SELECT cardid, card_name, card_position, card_company, tagname 
-        FROM "ByteCard".card 
-        JOIN "ByteCard".tag 
-        ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-        WHERE visibility = 'Y'
-
-      `;
-      params = [];
-    } else {
-      query = `
-        SELECT cardid, card_name, card_position, card_company, tagname 
-        FROM "ByteCard".card 
-        JOIN "ByteCard".tag 
-        ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-        WHERE ${column} ILIKE $1 AND visibility = 'Y'
-
-      `;
-      params = [`%${searchQuery}%`];
-    }
-
-    const result = await client.query(query, params);
-    const cards = result.rows;
-
-    console.log("Filtered Query Result:", cards);
-
-    // Pass user and cards to the template
-    res.render("search", { user: req.session.user, cards });
+    const result = await client.query(
+      `SELECT c.cardid, c.card_name, c.card_position, c.card_company, t.tagname 
+       FROM "ByteCard".card c 
+       JOIN "ByteCard".tag t 
+       ON c.tag_tagid = t.tagid 
+       WHERE c.visibility = 'Y' AND ${column} ILIKE $1`,
+      [`%${query}%`]
+    );
+    res.render("search", { user: req.session.user, cards: result.rows });
   } catch (error) {
-    console.error("Error fetching cards:", error);
-
-    // Pass an empty array and user in case of error
+    console.error("Error searching cards:", error);
     res.render("search", { user: req.session.user, cards: [] });
-  }
-});
-
-
-app.post("/search", async (req, res) => {
-  try {
-    const searchQuery = req.body.query || "";
-    const column = req.body.column || "card_name";
-
-    const validColumns = ["card_name", "card_position", "card_company", "tagname"];
-    if (!validColumns.includes(column)) {
-      throw new Error("Invalid column selected");
-    }
-
-    const query = `
-      SELECT cardid, card_name, card_position, card_company, tagname 
-      FROM "ByteCard".card 
-      JOIN "ByteCard".tag 
-      ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-      WHERE ${column} ILIKE $1 AND visibility = 'Y'
-    `;
-
-    const result = await client.query(query, [`%${searchQuery}%`]);
-
-    const cards = result.rows;
-
-    console.log("Filtered Query Result:", cards);
-
-    res.render("search", { cards });
-  } catch (error) {
-    console.error("Error fetching cards:", error);
-
-    res.render("search", { cards: [] });
   }
 });
 
@@ -477,22 +399,10 @@ app.post("/delete-account", async (req, res) => {
   }
 });
 
-
-
-
-
-
+// Logout
 app.get("/logout", (req, res) => {
-  console.log("Logging out. Destroying session for user:", req.session.user);
-
-  // Destroy the session
   req.session.destroy((err) => {
-    if (err) {
-      console.error("Error during logout:", err);
-      return res.status(500).send("Unable to log out");
-    }
-
-    console.log("Session destroyed successfully. Redirecting to login.");
+    if (err) return res.status(500).send("Unable to log out");
     res.redirect("/login");
   });
 });
