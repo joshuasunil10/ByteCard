@@ -113,8 +113,8 @@ app.post("/createByteCard", requireLogin, async (req, res) => {
   const { cardName, cardPosition, cardCompany, cardDescription, cardContact, visibility, tagId } = req.body;
   const userId = req.session.user.id;
 
-  // Set visibility to "T" if checked, otherwise "F"
-  const visibilityValue = visibility === 'yes' ? 'T' : 'F';
+  // Set visibility to "Y" if checked, otherwise "N"
+  const visibilityValue = visibility === 'yes' ? 'Y' : 'N';
 
   try {
     await client.query(
