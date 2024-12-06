@@ -18,6 +18,11 @@
             <h1 class="card-title"><%= card.card_name %></h1>
             <p class="card-field"><strong>Position:</strong> <%= card.card_position %></p>
             <p class="card-field"><strong>Company:</strong> <%= card.card_company %></p>
+            <% if (logoUrl) { %>
+              <img src="<%= logoUrl %>" alt="Logo of <%= card.card_company %>" width="100">
+            <% } else { %>
+              <p>No logo available for this company.</p>
+            <% } %>
             <p class="card-field"><strong>Tag:</strong> <%= card.tagname %></p>
         </div>
     </div>

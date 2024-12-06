@@ -343,7 +343,11 @@ app.get("/carddetail", async (req, res) => {
     }
 
     const card = result.rows[0];
-    res.render("carddetail", { card }); // Pass the card data to the template
+
+    // Generate the logo URL using the company name
+    const logoUrl = `https://img.logo.dev/${encodeURIComponent(card.card_company)}.com?token=pk_Juu8uvxFS8GChJyDrMDTtA`;
+
+    res.render("carddetail", { card, logoUrl }); // Pass card data and logo URL to the template
   } catch (error) {
     console.error("Error fetching card details:", error);
     res.status(500).send("Server error");
