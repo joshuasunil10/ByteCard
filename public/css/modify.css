@@ -9,7 +9,7 @@
 
 body {
     font-family: Poppins, Arial, sans-serif;
-    background-color: #363636; /* Dark grey background */
+    background-color: var(--background-color); /* Dark grey background */
     color: #d6d6d6; /* Light grey text */
     margin: 0;
     padding: 0;
@@ -32,7 +32,7 @@ form {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(61, 61, 54, 0.2);
     width: 350px;
-    border: 2px solid #ff5757; /* Red border */
+    border: 2px solid  var(--secondary-color); /* Red border */
 }
 
 /* Input Fields */
@@ -41,7 +41,7 @@ input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ff6969; /* Light red border */
+    border: 1px solid var(--secondary-color); /* Light red border */
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 14px;
@@ -60,7 +60,7 @@ label {
 
 /* Buttons */
 button {
-    background-color: #f55555; /* Vibrant red */
+    background-color: var(--secondary-color); /* Vibrant red */
     color: #ffffff; /* White text */
     border: none;
     padding: 10px 20px;
@@ -74,7 +74,7 @@ button {
 }
 
 button:hover {
-    background-color: #ff0000; /* Brighter red when hovered */
+    background-color: var(--darker-background-color); /* Brighter red when hovered */
 }
 
 /* Form alignment */
