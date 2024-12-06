@@ -289,7 +289,6 @@ app.post("/search", async (req, res) => {
 });
 
 
-
 app.post("/search", async (req, res) => {
   try {
     const searchQuery = req.body.query || "";
@@ -353,13 +352,6 @@ app.get("/carddetail", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
-
-
-
-
-
-
 
 
 app.get("/forgot-password", (req, res) => {
