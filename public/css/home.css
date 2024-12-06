@@ -9,7 +9,7 @@
     --primary-color: white;
     --secondary-color: #45A29E;
     --background-color: #1F2833;
-    --darker-background-color: #181e34;
+    --darker-background-color: #014147;
 }
 
 body {
@@ -159,7 +159,7 @@ body {
 .step:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    background-color: #f17272;
+    background-color: var(--secondary-color);
 }
 
 .step-icon {
@@ -168,13 +168,19 @@ body {
 
 .step-title {
     font-size: 1.5rem;
-    color: #00272c;
+    color: #008c9f;
+    margin-bottom: 0.5rem;
+}
+
+.step-title {
+    font-size: 1.5rem;
+    color: #00363d;
     margin-bottom: 0.5rem;
 }
 
 .step-description {
     font-size: 1rem;
-    color: #666;
+    color: #000000;
     margin: 0;
 
 
@@ -186,22 +192,31 @@ body {
 /* Contact Section Styles */
 .contact {
     padding: 4rem 2rem;
-    background-color: #4b4a4a;
+    background-color: var(--background-color);
     text-align: center;
     
 }
 
 .section-title {
     font-size: 2rem;
-    color: #f76f6f;
+    color: #05c4bb;
     margin-bottom: 1rem;
 }
+
+.section-title {
+    font-size: 2rem;
+    color: #05c4bb;
+    margin-bottom: 1rem;
+}
+
 
 .section-description {
     font-size: 1.2rem;
     color: #ffffff;
     margin-bottom: 2.5rem;
 }
+
+
 
 
 

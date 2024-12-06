@@ -16,7 +16,7 @@
     <nav class="nav">
       <a href="/search" class="nav-link">Discover</a>
       <% if (user) { %>
-        <span class="nav-link">Welcome, <%= user.name %></span>
+        <a href="/dashboard"><span class="nav-link">Welcome, <%= user.name %></span></a>
         <a href="/logout" class="nav-link">Logout</a>
       <% } else { %>
         <a href="/login" class="nav-link">Login</a>
@@ -74,7 +74,7 @@
       <p class="section-description">Feel free to reach out. We're here to help!</p>
 
       <p class="section-other-text">
-          <a style="color: rgb(255, 255, 255); font-size: large; text-decoration: none;" href="mailto:dev@bytecard.ie" class="btn btn-primary">Get Started</a></a>
+          <a style="color: rgb(0, 0, 0); font-size: large; text-decoration: none;" href="mailto:dev@bytecard.ie" class="btn btn-primary">Get Started</a></a>
 
 </section>
 
