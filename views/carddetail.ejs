@@ -10,16 +10,17 @@
     <header class="header">
         <a class="logo" href="/">ByteCard</a>
         <nav class="nav">
-            <a href="/search" class="nav-link">Discover</a>
+          <a href="/search" class="nav-link">Discover</a>
+          <% if (user) { %>
+            <a href="/dashboard"><span class="nav-link">Welcome, <%= user.name %></span></a>
+            <a href="/logout" class="nav-link">Logout</a>
+          <% } else { %>
+            <a href="/login" class="nav-link">Login</a>
+          <% } %>
         </nav>
-    </header>
-    <div class="details-container">
-        <div class="card-detail">
-            <h1 class="card-title"><%= card.card_name %></h1>
-            <p class="card-field"><strong>Position:</strong> <%= card.card_position %></p>
-            <p class="card-field"><strong>Company:</strong> <%= card.card_company %></p>
-            <p class="card-field"><strong>Tag:</strong> <%= card.tagname %></p>
-        </div>
+      </header>
+
+    <div class="container">
     </div>
 </body>
 </html>
