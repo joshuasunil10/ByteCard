@@ -24,7 +24,8 @@ app.use(
 // Database client setup
 const client = new Client({
   user: "joshua",
-  host: "localhost",
+  // host: "localhost",
+  host: "10.156.2.142",
   database: "postgres",
   password: "1234",
   port: 54321,
@@ -224,6 +225,7 @@ app.get("/search", async (req, res) => {
       FROM "ByteCard".card 
       JOIN "ByteCard".tag 
       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+      WHERE visibility = 'T'
     `;
 
     const result = await client.query(query);
@@ -231,13 +233,16 @@ app.get("/search", async (req, res) => {
 
     console.log("Loaded all cards:", cards);
 
-    res.render("search", { cards });
+    // Pass user and cards to the template
+    res.render("search", { user: req.session.user, cards });
   } catch (error) {
     console.error("Error fetching all cards:", error);
 
-    res.render("search", { cards: [] });
+    // Pass an empty array and user in case of error
+    res.render("search", { user: req.session.user, cards: [] });
   }
 });
+
 
 app.post("/search", async (req, res) => {
   try {
@@ -258,6 +263,8 @@ app.post("/search", async (req, res) => {
         FROM "ByteCard".card 
         JOIN "ByteCard".tag 
         ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+        WHERE visibility = 'T'
+
       `;
       params = [];
     } else {
@@ -266,24 +273,27 @@ app.post("/search", async (req, res) => {
         FROM "ByteCard".card 
         JOIN "ByteCard".tag 
         ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-        WHERE ${column} ILIKE $1
+        WHERE ${column} ILIKE $1 && visibility = 'T'
+
       `;
       params = [`%${searchQuery}%`];
     }
 
     const result = await client.query(query, params);
-
     const cards = result.rows;
 
-    console.log("Query Result:", cards);
+    console.log("Filtered Query Result:", cards);
 
-    res.render("search", { cards });
+    // Pass user and cards to the template
+    res.render("search", { user: req.session.user, cards });
   } catch (error) {
     console.error("Error fetching cards:", error);
 
-    res.render("search", { cards: [] });
+    // Pass an empty array and user in case of error
+    res.render("search", { user: req.session.user, cards: [] });
   }
 });
+
 
 
 app.post("/search", async (req, res) => {
@@ -301,7 +311,7 @@ app.post("/search", async (req, res) => {
       FROM "ByteCard".card 
       JOIN "ByteCard".tag 
       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-      WHERE ${column} ILIKE $1
+      WHERE ${column} ILIKE $1 && visibility = 'T'
     `;
 
     const result = await client.query(query, [`%${searchQuery}%`]);

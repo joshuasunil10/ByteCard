@@ -159,6 +159,19 @@ form {
   margin: 0;
 }
 
+/* Ensure the entire card is clickable */
+.card-link {
+  text-decoration: none; /* Remove default underline */
+  color: inherit; /* Inherit text color for the link */
+  display: block; /* Ensure the link fills the entire card */
+}
+
+/* Add hover effect for the card */
+.card-link:hover .card {
+  transform: scale(1.05); /* Slightly enlarge the card on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Highlight effect */
+}
+
 .card {
   background-color: #fdfd54; /* Bright yellow for cards */
   color: #000;
@@ -170,6 +183,7 @@ form {
   justify-content: space-between;
   max-width: 400px; /* Maximum width for cards */
   width: 100%; /* Allow shrinking for smaller screens */
+  cursor: pointer;
 }
 
 .card-header {

@@ -11,11 +11,17 @@
     <title>Search Results</title>
 </head>
 <body>
+
   <header class="header">
     <a class="logo" href="/"><div>ByteCard</div></a>
     <nav class="nav">
-      <a href="/" class="nav-link">Home</a>
-      <a href="/login" class="nav-link">Login</a>
+      <a href="/search" class="nav-link">Discover</a>
+      <% if (user) { %>
+        <span class="nav-link">Welcome, <%= user.name %></span>
+        <a href="/logout" class="nav-link">Logout</a>
+      <% } else { %>
+        <a href="/login" class="nav-link">Login</a>
+      <% } %>
     </nav>
   </header>
 
@@ -48,7 +54,8 @@
       <ul class="search-results">
         <% if (cards && cards.length > 0) { %>
           <% cards.forEach(function(card) { %>
-            <li class="card" >
+            <li class="card">
+              <a href="/carddetail?id=<%= card.id %>" class="card-link">
               <div class="card-header">
                 <span class="card-name"><%= card.card_name %></span>
                 <span class="card-brand">ByteCard</span>
@@ -59,17 +66,39 @@
               <div class="card-footer">
                 <span class="company-name"><%= card.card_company %></span>
                 <span class="card-industry"><%= card.tagname %></span>
-
-                <a href="/carddetail" class="nav-link">Detail</a>
               </div>
-              
             </li>
+            </a>
           <% }); %>
         <% } else { %>
           <li>No results found.</li>
         <% } %>
       </ul>
     </div>
+    
+    
+    
   </div>
 </body>
 </html>
+
+<script>
+  // Wait until the DOM is fully loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    // Get all the card elements
+    const cards = document.querySelectorAll(".card");
+
+    // Add click event listener to each card
+    cards.forEach((card) => {
+      const detailButton = card.querySelector(".detail-btn");
+
+      detailButton.addEventListener("click", () => {
+        const cardId = card.getAttribute("data-id"); // Retrieve the card's ID
+        if (cardId) {
+          window.location.href = `/carddetail?id=${cardId}`; // Redirect to the card details page
+        }
+      });
+    });
+  });
+</script>
+
