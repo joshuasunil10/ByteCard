@@ -267,7 +267,7 @@ app.post("/search", async (req, res) => {
         FROM "ByteCard".card 
         JOIN "ByteCard".tag 
         ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-        WHERE ${column} ILIKE $1 && visibility = 'T'
+        WHERE ${column} ILIKE $1 AND visibility = 'T'
 
       `;
       params = [`%${searchQuery}%`];
@@ -305,7 +305,7 @@ app.post("/search", async (req, res) => {
       FROM "ByteCard".card 
       JOIN "ByteCard".tag 
       ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-      WHERE ${column} ILIKE $1 && visibility = 'T'
+      WHERE ${column} ILIKE $1 AND visibility = 'T'
     `;
 
     const result = await client.query(query, [`%${searchQuery}%`]);

@@ -1,39 +1,72 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #262626; /* Dark background */
-  color: #f5f5f5; /* Light text for contrast */
+/* Global styles */
+*,
+*::before,
+*::after {
+    box-sizing: border-box; /* Include padding and borders in element's width/height */
 }
 
+:root {
+    --primary-color: white;
+    --secondary-color: #45A29E;
+    --background-color: #1F2833;
+    --darker-background-color: #014147;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: #f5f5f5;
+}
+
+/* Header */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #292929; /* Slightly lighter dark background */
-  color: #f5f5f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--darker-background-color);
+    color: white;
+    position: sticky; /* Makes the header sticky */
+    top: 0; /* Keeps it at the top of the page */
+    z-index: 1000;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header.sticky {
+    background-color: #333333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fdfd54; /* Bright yellow for logo */
-}
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+  }
+  
+  .logo:hover {
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
 
 .nav {
-  display: flex;
-  gap: 1rem;
+    display: flex;
+    gap: 1rem;
 }
 
 .nav-link {
-  color: #fdfd54;
-  text-decoration: none;
-  font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .nav-link:hover {
-  text-decoration: underline;
+    
+    color: var(--secondary-color);
 }
 
 .container {
@@ -46,24 +79,21 @@ body {
 }
 
 .search_text {
-  background-color: #444; /* Neutral background for search text */
-  color: #fdfd54;
-  padding: 1rem;
-  border-radius: 10px;
-  font-size: 3rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin: 0;
 }
 
 .search-input {
   width: 100%;
+  margin-top: 30px;
   padding: 0.8rem;
-  border-radius: 5px;
+  border-radius: 20px;
   border: none;
   font-size: 1rem;
   margin-bottom: 1rem;
+  border: 3px solid var(--secondary-color); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .search-input::placeholder {
@@ -72,7 +102,6 @@ body {
 
 .search-by-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
   margin-top: 1rem;
@@ -91,11 +120,22 @@ body {
   font-size: 1rem;
   border-radius: 5px;
   border: none;
-  background-color: #444; /* Neutral dark background */
-  color: #fdfd54; /* Bright yellow for text */
+  background-color: white;
+  color: #000000; /* Bright yellow for text */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+
+  /* flex: 1 1 300px;
+  max-width: 300px;
+  background: #c5c5c5;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; */
 }
 
 .search-by-select:hover {
@@ -103,28 +143,20 @@ body {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.search-by-select:focus {
-  outline: none;
-  box-shadow: 0 0 5px 2px rgba(253, 253, 84, 0.8); /* Highlight on focus */
-}
 
 .btn {
-  align-self: center;
-  display: inline-block;
-  background-color: #fdfd54; /* Bright yellow button */
-  color: #000;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s, box-shadow 0.2s;
+  width: 200px;
+  padding: 0.75rem 1.5rem;
+  color: black;
+  background-color: var(--primary-color);
+  border-radius: 40px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
