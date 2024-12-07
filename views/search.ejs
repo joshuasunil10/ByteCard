@@ -5,10 +5,12 @@
     <link rel="stylesheet" href="/css/search.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
     <title>Search Results</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
 </head>
 <body id="search-page">
 
@@ -85,5 +87,80 @@
     ByteCard - 2024 <br> Cian Anderson & Joshua Sunil Mathew
   </footer>
 
+
+
+
+  <script>
+    window.onload = () => {
+      // Animate cards on page load or when added (one by one)
+      function animateNewCardsSequentially(cards) {
+        console.log("Animating new cards sequentially:", cards);
+        anime({
+          targets: cards,
+          opacity: [0, 1],        // Fade in
+          scale: [0.8, 1],        // Scale from 80% to 100%
+          duration: 500,          // Duration for each card animation
+          easing: "easeOutQuad",  // Smooth easing effect
+          delay: anime.stagger(200), // Staggered delay of 200ms between each card
+        });
+      }
+  
+      // Animate card removal
+      function animateCardRemoval(card, callback) {
+        console.log("Animating card removal:", card);
+        anime({
+          targets: card,
+          opacity: [1, 0],  // Fade out
+          translateY: -50,  // Slide up
+          duration: 500,
+          easing: "easeInQuad",
+          complete: callback ? () => callback() : null // Call callback after animation
+        });
+      }
+  
+      // Add hover animations
+      function addHoverAnimations(card) {
+        card.addEventListener("mouseenter", () => {
+          anime({
+            targets: card,
+            scale: 1.05,    // Scale up slightly
+            duration: 200,
+            easing: "easeOutQuad"
+          });
+        });
+  
+        card.addEventListener("mouseleave", () => {
+          anime({
+            targets: card,
+            scale: 1,       // Reset scale
+            duration: 200,
+            easing: "easeOutQuad"
+          });
+        });
+      }
+  
+      // Add animations to existing cards
+      const cards = document.querySelectorAll(".card");
+      if (cards.length > 0) {
+        animateNewCardsSequentially(cards); // Apply sequential animation to all cards
+        cards.forEach((card) => {
+          addHoverAnimations(card); // Add hover effect for each card
+        });
+      }
+  
+      // Example of removing a card
+      // setTimeout(() => {
+      //   if (cards[0]) {
+      //     animateCardRemoval(cards[0], () => {
+      //       cards[0].remove(); // Remove card element after animation
+      //     });
+      //   }
+      // }, 3000);
+    };
+  </script>
+  
+
 </body>
 </html>
+
+
