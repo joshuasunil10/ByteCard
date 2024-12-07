@@ -87,9 +87,6 @@
     ByteCard - 2024 <br> Cian Anderson & Joshua Sunil Mathew
   </footer>
 
-
-
-
   <script>
     window.onload = () => {
       // Animate cards on page load or when added (one by one)
@@ -97,33 +94,28 @@
         console.log("Animating new cards sequentially:", cards);
         anime({
           targets: cards,
-          opacity: [0, 1],        // Fade in
-          scale: [0.8, 1],        // Scale from 80% to 100%
-          duration: 500,          // Duration for each card animation
-          easing: "easeOutQuad",  // Smooth easing effect
-          delay: anime.stagger(200), // Staggered delay of 200ms between each card
-        });
-      }
-  
-      // Animate card removal
-      function animateCardRemoval(card, callback) {
-        console.log("Animating card removal:", card);
-        anime({
-          targets: card,
-          opacity: [1, 0],  // Fade out
-          translateY: -50,  // Slide up
+          opacity: [0, 1],
+          scale: [0.8, 1],
           duration: 500,
-          easing: "easeInQuad",
-          complete: callback ? () => callback() : null // Call callback after animation
+          easing: "easeOutQuad", 
+          delay: anime.stagger(200),
         });
       }
   
+      // Remove all existing cards with animation
+      function removeExistingCards() {
+        const existingCards = document.querySelectorAll(".card-shell");
+        existingCards.forEach((card) => {
+          animateCardRemoval(card, () => card.remove());
+        });
+      }
+    
       // Add hover animations
       function addHoverAnimations(card) {
         card.addEventListener("mouseenter", () => {
           anime({
             targets: card,
-            scale: 1.05,    // Scale up slightly
+            scale: 1.05,
             duration: 200,
             easing: "easeOutQuad"
           });
@@ -132,7 +124,7 @@
         card.addEventListener("mouseleave", () => {
           anime({
             targets: card,
-            scale: 1,       // Reset scale
+            scale: 1,
             duration: 200,
             easing: "easeOutQuad"
           });
@@ -147,16 +139,9 @@
           addHoverAnimations(card); // Add hover effect for each card
         });
       }
-  
-      // Example of removing a card
-      // setTimeout(() => {
-      //   if (cards[0]) {
-      //     animateCardRemoval(cards[0], () => {
-      //       cards[0].remove(); // Remove card element after animation
-      //     });
-      //   }
-      // }, 3000);
-    };
+
+    }
+
   </script>
   
 
