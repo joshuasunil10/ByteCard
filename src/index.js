@@ -27,7 +27,7 @@ const client = new Client({
   host: "localhost",
   database: "postgres",
   password: "1234",
-  port: 5432,
+  port: 54321,
 });
 
 client.connect()
@@ -420,10 +420,14 @@ app.get("/dashboard", requireLogin, async (req, res) => {
 });
 
 
-// Route to handle ByteCard creation
 app.post("/createByteCard", requireLogin, async (req, res) => {
   const { cardName, cardPosition, cardCompany, visibility, tagIds } = req.body; // tagIds as array
-  const userId = req.session.user.id;
+  const userId = req.session.user ? req.session.user.id : null;
+
+  if (!userId) {
+    console.error("User ID not found in session");
+    return res.status(401).send("User not logged in");
+  }
 
   // Loop through tagIds and insert ByteCards accordingly (if multiple tags are selected)
   try {
