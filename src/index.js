@@ -27,7 +27,7 @@ const client = new Client({
   host: "localhost",
   database: "postgres",
   password: "1234",
-  port: 5432,
+  port: 54321,
 });
 
 client.connect()
@@ -57,35 +57,6 @@ app.get("/dashboard", requireLogin, async (req, res) => {
   } catch (error) {
     console.error("Error fetching cards:", error);
     res.render("dashboard", { user: req.session.user, cards: [] });
-  }
-});
-
-app.delete("/delete-card/:id", requireLogin, async (req, res) => {
-  const cardId = req.params.id;
-  const userId = req.session.user.id;
-
-  // Validate card ID
-  if (!/^\d+$/.test(cardId)) {
-    return res.status(400).json({ message: "Invalid card ID." });
-  }
-
-  try {
-    // Execute deletion query
-    const result = await client.query(
-      'DELETE FROM "ByteCard".card WHERE id = $1 AND user_userid = $2',
-      [cardId, userId]
-    );
-
-    // Check if any row was deleted
-    if (result.rowCount === 0) {
-      return res.status(404).json({ message: "Card not found or unauthorized action." });
-    }
-
-    // Respond with success
-    res.status(200).json({ message: "Card deleted successfully." });
-  } catch (error) {
-    console.error("Error deleting card:", error);
-    res.status(500).json({ message: "Failed to delete the card. Please try again later." });
   }
 });
 
@@ -243,7 +214,7 @@ app.post("/search", async (req, res) => {
   }
 });
 
-app.get("/carddetail", async (req, res) => {
+app.get("/carddetail", requireLogin, async (req, res) => {
   try {
     const cardId = req.query.id; // Correctly retrieve the card ID
     if (!cardId) {
@@ -268,7 +239,7 @@ app.get("/carddetail", async (req, res) => {
     // Generate the logo URL using the company name
     const logoUrl = `https://img.logo.dev/${encodeURIComponent(card.card_company)}.com?token=pk_Juu8uvxFS8GChJyDrMDTtA`;
 
-    res.render("carddetail", { card, logoUrl,user: req.session.user }); // Pass card data and logo URL to the template
+    res.render("carddetail", { card, logoUrl, user: req.session.user }); // Pass card data and logo URL to the template
   } catch (error) {
     console.error("Error fetching card details:", error);
     res.status(500).send("Server error");
@@ -354,7 +325,7 @@ app.post("/reset-password", async (req, res) => {
   }
 });
 
-app.post("/delete-account", async (req, res) => {
+app.post("/delete-account", requireLogin, async (req, res) => {
   const { password } = req.body;
 
   // Check if the user is logged in by verifying the session
@@ -399,6 +370,42 @@ app.post("/delete-account", async (req, res) => {
   }
 });
 
+
+app.post("/deletecard", requireLogin, async (req, res) => {
+  const { cardId } = req.body;
+
+  // Check if the user is logged in by verifying the session
+  if (!req.session || !req.session.user || !req.session.user.id) {
+    return res.status(401).json({ message: "User not logged in" });
+  }
+
+  const userId = req.session.user.id; // Extract the user ID from the session
+
+  try {
+    // Check if the card exists and belongs to the logged-in user
+    const result = await client.query(
+      'SELECT * FROM "ByteCard".card WHERE "cardid" = $1 AND "user_userid" = $2',
+      [cardId, userId]
+    );
+    const card = result.rows[0];
+
+    if (!card) {
+      return res.status(404).json({ message: "Card not found or does not belong to the user" });
+    }
+
+    // Delete the card
+    await client.query('DELETE FROM "ByteCard".card WHERE "cardid" = $1 AND "user_userid" = $2', [
+      cardId,
+      userId,
+    ]);
+
+    res.status(200).json({ message: "Card deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting card:", error);
+    res.status(500).json({ message: "Error deleting card" });
+  }
+});
+
 // Logout
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -420,10 +427,14 @@ app.get("/dashboard", requireLogin, async (req, res) => {
 });
 
 
-// Route to handle ByteCard creation
 app.post("/createByteCard", requireLogin, async (req, res) => {
   const { cardName, cardPosition, cardCompany, visibility, tagIds } = req.body; // tagIds as array
-  const userId = req.session.user.id;
+  const userId = req.session.user ? req.session.user.id : null;
+
+  if (!userId) {
+    console.error("User ID not found in session");
+    return res.status(401).send("User not logged in");
+  }
 
   // Loop through tagIds and insert ByteCards accordingly (if multiple tags are selected)
   try {

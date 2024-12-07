@@ -19,7 +19,7 @@
       <nav class="nav">
         <a href="/search" class="nav-link">Discover</a>
         <% if (user) { %>
-          <a href="/dashboard"><span class="nav-link">Welcome, <%= user.name %></span></a>
+          <a href="/dashboard" class="nav-link">User: <%= user.name %></a>
           <a href="/logout" class="nav-link">Logout</a>
         <% } else { %>
           <a href="/login" class="nav-link">Login</a>
@@ -28,17 +28,15 @@
     </header>
 
     <main class="main-container">
-      <h1>Welcome <span class="text"><%= user.name %>!</span></h1>
+      <h1>Welcome, <span class="text"><%= user.name %>!</span></h1>
       <h2>Your ByteCards</h2>
       <a href="/addcard"
         ><button id="createBtn" class="btn">Create a ByteCard +</button></a
       >
       <div class="card-container">
-        <div class="results-container">
-          <ul class="search-results">
-            <% if (cards && cards.length > 0) { %> <%
-            cards.forEach(function(card) { %>
-            <li class="card" data-id="<%= card.id %>">
+        <% if (cards && cards.length > 0) { %>
+          <% cards.forEach(function(card) { %>
+            <div class="card" data-id="<%= card.cardid %>">
               <div class="card-header">
                 <span class="card-name"><%= card.card_name %></span>
                 <span class="card-brand">ByteCard</span>
@@ -50,22 +48,24 @@
                 <span class="company-name"><%= card.card_company %></span>
                 <span class="card-industry"><%= card.tagname %></span>
               </div>
-             </li>
-            <% }); %> <% } else { %>
-            <li>
-              You don't have any cards - press the + button to create one!
-            </li>
-            <% } %>
-          </ul>
-        </div>
+              <button class="deletecardbtn" data-id="<%= card.cardid %>">Delete Card</button>
+            </div>
+          <% }); %>
+        <% } else { %>
+          <div>
+            You don't have any cards - press the + button to create one!
+          </div>
+        <% } %>
       </div>
-
-      
 
       <h2>Account Settings</h2>
 
       <!-- Delete Account Button -->
       <button id="deleteBtn" class="btn delete-btn">Delete Account</button>
+      <br>
+      <br>
+
+      <a href="/forgot-password"><button id="deleteBtn" class="btn delete-btn">Reset Password</button></a>
 
       <!-- Modal for Account Deletion Confirmation -->
       <div id="deleteModal" class="modal">
@@ -87,8 +87,6 @@
       </div>
     </main>
 
-    <footer class="footer">ByteCard - 2024</footer>
-
     <script>
       // Get elements for delete modal
       const deleteBtn = document.getElementById("deleteBtn");
@@ -107,12 +105,6 @@
       cancelDeleteBtn.addEventListener("click", () => {
         deleteModal.style.display = "none"; // Hide the modal
         deleteBtn.style.display = "block"; // Show the delete button again
-      });
-
-      // Close the delete modal when the cancel button is clicked
-      cardcancelDeleteBtn.addEventListener("click", () => {
-        carddeleteModal.style.display = "none"; // Hide the modal
-        carddeleteBtn.style.display = "block"; // Show the delete button again
       });
 
       // Handle account deletion when confirm is clicked
@@ -145,6 +137,42 @@
           console.error("Error:", error);
           alert("An error occurred. Please try again.");
         }
+      });
+
+      // Add event listeners to all delete card buttons
+      document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.deletecardbtn');
+
+        deleteButtons.forEach(button => {
+          button.addEventListener('click', async function() {
+            const cardId = button.getAttribute("data-id");
+
+            if (!confirm("Are you sure you want to delete this card?")) return;
+
+            try {
+              const response = await fetch("/deletecard", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ cardId }),
+              });
+
+              const result = await response.json();
+
+              if (response.ok) {
+                // Remove the card from the DOM
+                const card = this.closest('.card');
+                card.remove();
+              } else {
+                alert('Failed to delete the card.');
+              }
+            } catch (error) {
+              console.error('Error:', error);
+              alert('An error occurred while deleting the card.');
+            }
+          });
+        });
       });
     </script>
   </body>
