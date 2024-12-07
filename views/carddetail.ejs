@@ -8,11 +8,17 @@
 </head>
 <body>
     <header class="header">
-        <a class="logo" href="/">ByteCard</a>
+        <a class="logo" href="/"><div>ByteCard</div></a>
         <nav class="nav">
-            <a href="/search" class="nav-link">Discover</a>
+          <a href="/search" class="nav-link">Discover</a>
+          <% if (user) { %>
+            <a href="/dashboard"><span class="nav-link">Welcome, <%= user.name %></span></a>
+            <a href="/logout" class="nav-link">Logout</a>
+          <% } else { %>
+            <a href="/login" class="nav-link">Login</a>
+          <% } %>
         </nav>
-    </header>
+      </header>
     <div class="main">
         <div class="details-container">
             <div class="card-detail">
@@ -48,6 +54,10 @@
             </div>
         </div>
     </div>
+
+    <footer class="footer">
+        ByteCard - 2024 <br> Cian Anderson & Joshua Sunil Mathew
+    </footer>
     
 </body>
 </html>

@@ -1,3 +1,31 @@
+import { gsap } from "gsap";
+import { animateNewCard, animateCardRemoval, addHoverAnimations } from "./src/animation.js";
+
+
+// Adding a new card
+document.querySelector(".btn").addEventListener("click", () => {
+  const resultsContainer = document.querySelector(".search-results");
+  const newCard = document.createElement("li");
+  newCard.className = "card-shell";
+  newCard.innerHTML = `<div class="card">New Card</div>`;
+  resultsContainer.appendChild(newCard);
+
+  // Animate the newly added card
+  animateNewCard(newCard);
+  addHoverAnimations(newCard); // Add hover animations
+});
+
+// Removing a card
+document.querySelector(".search-results").addEventListener("click", (e) => {
+  if (e.target.closest(".card")) {
+    const card = e.target.closest(".card-shell");
+
+    // Animate and remove the card
+    animateCardRemoval(card, () => card.remove());
+  }
+});
+
+
 // Get elements for delete modal
 const deleteBtn = document.getElementById("deleteBtn");
 const deleteModal = document.getElementById("deleteModal");
@@ -106,3 +134,36 @@ createCardForm.addEventListener("submit", async (e) => {
         alert("An error occurred. Please try again.");
     }
 });
+
+// Search page card click leads to card details
+document.addEventListener("DOMContentLoaded", () => {
+
+    // Check if the current page is the search page
+    if (document.body.id === "search-page") {
+        console.log("Search page detected");
+    
+
+        // Get all the card elements
+        const cards = document.querySelectorAll(".card");
+        console.log("Cards found:", document.querySelectorAll(".card"));
+
+
+        // Animate all cards on page load
+        gsap.from(cards, {
+            opacity: 0,
+            y: 50, // Slide in from below
+            duration: 0.5,  
+            stagger: 0.2, // Delay between each card's animation
+        });
+
+        // Add hover animations for all cards
+        cards.forEach((card) => {
+            addHoverAnimations(card);
+        });
+        
+    }
+});
+
+
+
+
