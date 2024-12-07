@@ -24,11 +24,27 @@
                         <p>No logo available for this company.</p>
                       <% } %>
                 </div>
-                <p class="card-field"><strong>Company:</strong> <%= card.card_company %></p>
-                <p class="card-field"><strong>Position:</strong> <%= card.card_position %></p>
-                <p class="card-field"><strong>Description:</strong> <%= card.card_description %></p>
-                <p class="card-field"><strong>Contact:</strong> <%= card.card_contact %></p>
-                <p class="card-field"><strong>Tag:</strong> <%= card.tagname %></p>
+                <p class="card-field">
+                    <span class="card-subtitle">Company:</span> 
+                    <span class="card-text"><%= card.card_company %></span>
+                  </p>
+                  <p class="card-field">
+                    <span class="card-subtitle">Position:</span> 
+                    <span class="card-text"><%= card.card_position %></span>
+                  </p>
+                  <p class="card-field">
+                    <span class="card-subtitle">Description:</span> 
+                    <span class="card-text"><%= card.card_description %></span>
+                  </p>
+                  <p class="card-field">
+                    <span class="card-subtitle">Contact:</span> 
+                    <span class="card-text"><%= card.card_contact %></span>
+                  </p>
+                  <p class="card-field">
+                    <span class="card-subtitle">Tag:</span> 
+                    <span class="card-text"><%= card.tagname %></span>
+                  </p>
+                  
             </div>
         </div>
     </div>

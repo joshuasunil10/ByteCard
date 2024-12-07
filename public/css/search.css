@@ -6,12 +6,6 @@
   box-sizing: border-box;
 }
 
-:root {
-  --card-color-1: #4c94b2;
-  --card-color-2: #406760;
-  --card-color-3: #49575b;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -33,6 +27,7 @@ body {
   font-size: 2.5rem;
   color: var(--primary-color);
   margin: 0;
+  text-align: center;
 }
 
 .search-input {
@@ -58,13 +53,6 @@ body {
   margin-top: 1rem;
 }
 
-.search-by-label {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #fdfd54;
-  /* Bright yellow for label */
-}
-
 .search-by-select {
   width: 100%;
   max-width: 300px;
@@ -74,7 +62,6 @@ body {
   border: none;
   background-color: white;
   color: #000000;
-  /* Bright yellow for text */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -112,40 +99,48 @@ form {
 }
 
 .results-container {
-  width: 90%;
+  width: 90vw;
   padding: 1rem;
   border-radius: 10px;
-  margin: 2rem auto;
+  margin: 2rem;
+  align-items: center;
+
 }
 
 .search-results {
   display: flex;
   flex-wrap: wrap;
-  /* Allow wrapping for multiple cards */
-  justify-content: center;
-  /* Center content */
+  
   gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Ensure the entire card is clickable */
 .card-link {
   text-decoration: none;
-  /* Remove default underline */
   color: inherit;
-  /* Inherit text color for the link */
   display: block;
-  /* Ensure the link fills the entire card */
 }
 
-/* Add hover effect for the card */
 .card-link:hover .card {
   transform: scale(1.05);
-  /* Slightly enlarge the card on hover */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  /* Highlight effect */
+}
+
+
+.card-shell {
+  padding: 1rem;
+  border-radius: 10px;
+  max-width: 450px;
+  min-width: 25vw;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .card {
@@ -156,17 +151,70 @@ form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 400px;
+  max-width: 90vw;
+  min-width: 25vw;
   width: 100%;
   cursor: pointer;
   justify-content: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover effect */
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.card-name,
+.card-brand,
+.card-position,
+.card-footer {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(1rem, 2.5vw, 1.5rem); /* Scales font size responsively */
+}
+
+.card-name {
+  font-size: clamp(1rem, 5vw, 2rem); /* Larger font size for titles */
+  
+  text-shadow: 0 1px 3px rgb(146, 146, 146);
+  text-decoration: underline;
+  padding-top: 1rem;
+}
+
+.card-brand {
+  font-size: clamp(1.2rem, 5vw, 2rem); /* Larger font size for titles */
+  color: white;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.card-position {
+  margin: 1.5rem 0;
+  font-size: clamp(0.9rem, 2vw, 1.2rem); /* Adjust for description */
+  text-shadow: 0 1px 3px rgb(146, 146, 146);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(0.8rem, 1.5vw, 1.2rem); /* Adjust for footer content */
+  align-items: center;
+  margin-top: auto;
+  padding-bottom: 2rem;
+}
+
+/* Example Media Query for Small Screens */
+@media screen and (max-width: 768px) {
+  .card-position,
+  .card-footer {
+    font-size: clamp(0.9rem, 4vw, 1.2rem); /* Further adjust on smaller screens */
+  }
 }
 
 .search-results li {
@@ -175,71 +223,31 @@ form {
 
 /* Cycle through 3 colors using nth-child */
 .search-results li:nth-child(1) .card {
-  background-color: var(--card-color-1);
-  /* Blue */
+  background: linear-gradient(160deg, #59acd0, #1f3f4c);
 }
 
 .search-results li:nth-child(2) .card {
-  background-color: var(--card-color-2);
-  /* Orange */
+  background: linear-gradient(160deg, #39655d, #25433d);
 }
 
 .search-results li:nth-child(3) .card {
-  background-color: var(--card-color-3);
-  /* Pink */
+  background: linear-gradient(160deg, #49575b, #2c3537);
 }
 
 /* Repeat colors for subsequent cards */
 .search-results li:nth-child(3n+1) .card {
-  background-color: var(--card-color-1);
-  /* Blue */
+  background: linear-gradient(160deg, #59acd0, #1f3f4c);
 }
 
 .search-results li:nth-child(3n+2) .card {
-  background-color: var(--card-color-2);
-  /* Orange */
+  background: linear-gradient(160deg, #39655d, #25433d);
 }
 
 .search-results li:nth-child(3n+3) .card {
-  background-color: var(--card-color-3);
-  /* Pink */
+  background: linear-gradient(160deg, #49575b, #2c3537);
 }
 
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-}
-
-.card-name {
-  font-size: 1.5rem;
-  text-shadow: 0 1px 3px rgb(146, 146, 146);
-  text-decoration: underline;
-  padding-top: 1rem;
-}
-
-.card-brand {
-  font-size: 1.5rem;
-  color: #000;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-}
-
-.card-position {
-  margin: 1.5rem 0;
-  text-shadow: 0 1px 3px rgb(146, 146, 146);
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  /* Space between footer items */
-  font-size: 1.2rem;
-  align-items: center;
-  margin-top: auto;
-  /* Push footer to the bottom of the card */
-  padding-bottom: 2rem;
-}
 
 .search-results li {
   flex: 1 1 300px;

@@ -17,7 +17,7 @@
     <nav class="nav">
       <a href="/search" class="nav-link">Discover</a>
       <% if (user) { %>
-        <a href="/dashboard"><span class="nav-link">Welcome, <%= user.name %></span></a>
+        <span class="nav-link">Welcome, <%= user.name %></span>
         <a href="/logout" class="nav-link">Logout</a>
       <% } else { %>
         <a href="/login" class="nav-link">Login</a>
@@ -55,7 +55,7 @@
       <ul class="search-results">
         <% if (cards && cards.length > 0) { %>
           <% cards.forEach(function(card) { %>
-            <li class="card">
+            <li class="card-shell">
               <div class="card" data-id="<%= card.cardid %>">
                 <a href="/carddetail?id=<%= card.cardid %>" class="card-link">
                   <div class="card-header">
