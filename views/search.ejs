@@ -17,8 +17,9 @@
     <nav class="nav">
       <a href="/search" class="nav-link">Discover</a>
       <% if (user) { %>
-        <a href="/dashboard"><span class="nav-link">Welcome, <%= user.name %></span></a>
+        <a href="/dashboard" class="nav-link">User: <%= user.name %></a>
         <a href="/logout" class="nav-link">Logout</a>
+        
       <% } else { %>
         <a href="/login" class="nav-link">Login</a>
       <% } %>

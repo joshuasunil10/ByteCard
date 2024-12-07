@@ -370,6 +370,42 @@ app.post("/delete-account", requireLogin, async (req, res) => {
   }
 });
 
+
+app.post("/deletecard", requireLogin, async (req, res) => {
+  const { cardId } = req.body;
+
+  // Check if the user is logged in by verifying the session
+  if (!req.session || !req.session.user || !req.session.user.id) {
+    return res.status(401).json({ message: "User not logged in" });
+  }
+
+  const userId = req.session.user.id; // Extract the user ID from the session
+
+  try {
+    // Check if the card exists and belongs to the logged-in user
+    const result = await client.query(
+      'SELECT * FROM "ByteCard".card WHERE "cardid" = $1 AND "user_userid" = $2',
+      [cardId, userId]
+    );
+    const card = result.rows[0];
+
+    if (!card) {
+      return res.status(404).json({ message: "Card not found or does not belong to the user" });
+    }
+
+    // Delete the card
+    await client.query('DELETE FROM "ByteCard".card WHERE "cardid" = $1 AND "user_userid" = $2', [
+      cardId,
+      userId,
+    ]);
+
+    res.status(200).json({ message: "Card deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting card:", error);
+    res.status(500).json({ message: "Error deleting card" });
+  }
+});
+
 // Logout
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
