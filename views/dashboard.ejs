@@ -109,12 +109,6 @@
         deleteBtn.style.display = "block"; // Show the delete button again
       });
 
-      // Close the delete modal when the cancel button is clicked
-      cardcancelDeleteBtn.addEventListener("click", () => {
-        carddeleteModal.style.display = "none"; // Hide the modal
-        carddeleteBtn.style.display = "block"; // Show the delete button again
-      });
-
       // Handle account deletion when confirm is clicked
       confirmDeleteBtn.addEventListener("click", async () => {
         const password = passwordInput.value;

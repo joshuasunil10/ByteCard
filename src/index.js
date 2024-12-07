@@ -60,35 +60,6 @@ app.get("/dashboard", requireLogin, async (req, res) => {
   }
 });
 
-app.delete("/delete-card/:id", requireLogin, async (req, res) => {
-  const cardId = req.params.id;
-  const userId = req.session.user.id;
-
-  // Validate card ID
-  if (!/^\d+$/.test(cardId)) {
-    return res.status(400).json({ message: "Invalid card ID." });
-  }
-
-  try {
-    // Execute deletion query
-    const result = await client.query(
-      'DELETE FROM "ByteCard".card WHERE id = $1 AND user_userid = $2',
-      [cardId, userId]
-    );
-
-    // Check if any row was deleted
-    if (result.rowCount === 0) {
-      return res.status(404).json({ message: "Card not found or unauthorized action." });
-    }
-
-    // Respond with success
-    res.status(200).json({ message: "Card deleted successfully." });
-  } catch (error) {
-    console.error("Error deleting card:", error);
-    res.status(500).json({ message: "Failed to delete the card. Please try again later." });
-  }
-});
-
 
 app.get("/login", (req, res) => {
   if (req.session.user) {
@@ -243,7 +214,7 @@ app.post("/search", async (req, res) => {
   }
 });
 
-app.get("/carddetail", async (req, res) => {
+app.get("/carddetail", requireLogin, async (req, res) => {
   try {
     const cardId = req.query.id; // Correctly retrieve the card ID
     if (!cardId) {
@@ -268,7 +239,7 @@ app.get("/carddetail", async (req, res) => {
     // Generate the logo URL using the company name
     const logoUrl = `https://img.logo.dev/${encodeURIComponent(card.card_company)}.com?token=pk_Juu8uvxFS8GChJyDrMDTtA`;
 
-    res.render("carddetail", { card, logoUrl }); // Pass card data and logo URL to the template
+    res.render("carddetail", { card, logoUrl, user: req.session.user }); // Pass card data and logo URL to the template
   } catch (error) {
     console.error("Error fetching card details:", error);
     res.status(500).send("Server error");
@@ -354,7 +325,7 @@ app.post("/reset-password", async (req, res) => {
   }
 });
 
-app.post("/delete-account", async (req, res) => {
+app.post("/delete-account", requireLogin, async (req, res) => {
   const { password } = req.body;
 
   // Check if the user is logged in by verifying the session
