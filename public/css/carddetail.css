@@ -7,9 +7,6 @@
     box-sizing: border-box; /* Include padding and borders in element's width/height */
 }
 
-:root {
-    --card-color-1: #4c94b2; /* Dark Blue */
-}
 
 body {
     margin: 0;
@@ -68,18 +65,18 @@ body {
 
 .logo img {
   border-radius: 50%;
-  width: clamp(6rem, 20vw, 10rem); /* Dynamically scale based on screen width */
+  width: clamp(6rem, 20vw, 10rem);
   height: clamp(6rem, 20vw, 10rem);
   border: 3px solid #000000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  object-fit: cover; /* Ensures the image retains proportions */
+  object-fit: cover;
 }
 
 .card-field {
-  font-size: clamp(1rem, 2.5vw, 1.2rem); /* Adjust text size */
+  font-size: clamp(1rem, 2.5vw, 1.2rem); 
   margin: 0.5rem 0;
   text-align: left;
-  line-height: 1.5; /* Improve readability */
+  line-height: 1.5;
 }
 
 .card-subtitle {
@@ -95,7 +92,7 @@ body {
   padding: 0.75rem;
   background-color: #000;
   color: white;
-  font-size: clamp(0.9rem, 1.5vw, 1rem); /* Scales font size */
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: bold;
   text-align: center;
   border: none;
@@ -114,8 +111,8 @@ body {
 }
 
 .extras {
-  font-size: clamp(0.8rem, 1.2vw, 1rem); /* Responsive scaling for extras */
-  color: #888; /* Grey for extras text */
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  color: #888;
   margin-top: 0.5rem;
   text-decoration: underline;
   cursor: pointer;

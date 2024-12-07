@@ -177,11 +177,11 @@ form {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: clamp(1rem, 2.5vw, 1.5rem); /* Scales font size responsively */
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .card-name {
-  font-size: clamp(1rem, 5vw, 2rem); /* Larger font size for titles */
+  font-size: clamp(1rem, 5vw, 2rem); 
   
   text-shadow: 0 1px 3px rgb(146, 146, 146);
   text-decoration: underline;
@@ -189,31 +189,31 @@ form {
 }
 
 .card-brand {
-  font-size: clamp(1.2rem, 5vw, 2rem); /* Larger font size for titles */
+  font-size: clamp(1.2rem, 5vw, 2rem);
   color: white;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 
 .card-position {
   margin: 1.5rem 0;
-  font-size: clamp(0.9rem, 2vw, 1.2rem); /* Adjust for description */
+  font-size: clamp(0.9rem, 2vw, 1.2rem); 
   text-shadow: 0 1px 3px rgb(146, 146, 146);
 }
 
 .card-footer {
   display: flex;
   justify-content: space-between;
-  font-size: clamp(0.8rem, 1.5vw, 1.2rem); /* Adjust for footer content */
+  font-size: clamp(0.8rem, 1.5vw, 1.2rem); 
   align-items: center;
   margin-top: auto;
   padding-bottom: 2rem;
 }
 
-/* Example Media Query for Small Screens */
+
 @media screen and (max-width: 768px) {
   .card-position,
   .card-footer {
-    font-size: clamp(0.9rem, 4vw, 1.2rem); /* Further adjust on smaller screens */
+    font-size: clamp(0.9rem, 4vw, 1.2rem); 
   }
 }
 
@@ -221,7 +221,7 @@ form {
   width: 10px;
 }
 
-/* Cycle through 3 colors using nth-child */
+
 .search-results li:nth-child(1) .card {
   background: linear-gradient(160deg, #59acd0, #1f3f4c);
 }
@@ -234,7 +234,6 @@ form {
   background: linear-gradient(160deg, #49575b, #2c3537);
 }
 
-/* Repeat colors for subsequent cards */
 .search-results li:nth-child(3n+1) .card {
   background: linear-gradient(160deg, #59acd0, #1f3f4c);
 }
@@ -251,7 +250,6 @@ form {
 
 .search-results li {
   flex: 1 1 300px;
-  /* Ensure cards take up at least 300px */
 }
 
 .search-results li:hover {
