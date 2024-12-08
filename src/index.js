@@ -29,7 +29,7 @@ const client = new Client({
   host: "localhost",
   database: "postgres",
   password: "1234",
-  port: 5432,
+  port: 54321,
 });
 
 client.connect()
@@ -83,7 +83,7 @@ app.route("/login")
 
       // Validate user existence and password
       if (!user || !(await bcrypt.compare(password, user.password))) {
-        return res.status(401).send("Invalid email or password");
+        return res.status(401).send("<script>alert('Invalid email or password'); window.location.href = '/login';</script>");
       }
 
       // Set session data
