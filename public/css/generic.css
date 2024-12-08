@@ -6,6 +6,8 @@
     --darker-background-color: #014147;
 }
 
+
+
 /* Header Styling */
 .header {
     display: flex;
@@ -25,6 +27,31 @@
 .header.sticky {
     background-color: #333333;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+/* Footer Styling */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--darker-background-color);
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: var(--secondary-color);
 }
 
 /* Logo Styling */
@@ -90,6 +117,10 @@
     padding: 1rem 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
+
+
+
+
 
 /* Responsive Styling for Mobile */
 @media (max-width: 768px) {
