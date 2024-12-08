@@ -1,6 +1,3 @@
-import { gsap } from "gsap";
-import { animateNewCard, animateCardRemoval, addHoverAnimations } from "./src/animation.js";
-
 
 // Adding a new card
 document.querySelector(".btn").addEventListener("click", () => {
@@ -135,34 +132,28 @@ createCardForm.addEventListener("submit", async (e) => {
     }
 });
 
-// Search page card click leads to card details
-document.addEventListener("DOMContentLoaded", () => {
+// Modal elements
+const shareButton = document.getElementById("shareButton");
+const qrCodeModal = document.getElementById("qrCodeModal");
+const closeModalButton = document.getElementById("closeModalButton");
 
-    // Check if the current page is the search page
-    if (document.body.id === "search-page") {
-        console.log("Search page detected");
-    
+// Show the QR code modal
+shareButton.addEventListener("click", () => {
+    qrCodeModal.style.display = "flex"; // Display the modal
+});
 
-        // Get all the card elements
-        const cards = document.querySelectorAll(".card");
-        console.log("Cards found:", document.querySelectorAll(".card"));
+// Hide the QR code modal
+closeModalButton.addEventListener("click", () => {
+    qrCodeModal.style.display = "none"; // Hide the modal
+});
 
-
-        // Animate all cards on page load
-        gsap.from(cards, {
-            opacity: 0,
-            y: 50, // Slide in from below
-            duration: 0.5,  
-            stagger: 0.2, // Delay between each card's animation
-        });
-
-        // Add hover animations for all cards
-        cards.forEach((card) => {
-            addHoverAnimations(card);
-        });
-        
+// Close the modal if the user clicks outside the modal content
+window.addEventListener("click", (event) => {
+    if (event.target === qrCodeModal) {
+        qrCodeModal.style.display = "none"; // Hide the modal
     }
 });
+
 
 
 

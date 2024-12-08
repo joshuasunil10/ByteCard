@@ -23,6 +23,19 @@
 
 
     <div class="main">
+      <div class="card-actions">
+        <!-- Share Button -->
+        <button id="shareButton" class="share-btn">Share</button>
+    </div>
+    
+    <!-- QR Code Modal -->
+    <div id="qrCodeModal" class="modal">
+        <div class="modal-content">
+            <h2>Scan to Share</h2>
+            <img src="<%= qrCodeDataUrl %>" alt="QR Code">
+            <button id="closeModalButton" class="close-modal-btn">Close</button>
+        </div>
+    </div>
         <div class="details-container">
             <div class="card-detail">
                 <h1 class="card-title"><%= card.card_name %></h1>

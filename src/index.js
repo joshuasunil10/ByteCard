@@ -3,6 +3,8 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const { Client } = require("pg");
 const session = require("express-session");
+const QRCode = require('qrcode');
+
 
 const app = express();
 app.use(express.static(path.join(__dirname, "../public")));
@@ -27,7 +29,7 @@ const client = new Client({
   host: "localhost",
   database: "postgres",
   password: "1234",
-  port: 54321,
+  port: 5432,
 });
 
 client.connect()
@@ -214,37 +216,43 @@ app.route("/search")
   });
 
 
-app.get("/carddetail", requireLogin, async (req, res) => {
-  try {
-    const cardId = req.query.id;
-    if (!cardId) {
-      return res.status(400).send("Card ID is required");
+
+  app.get("/carddetail", requireLogin, async (req, res) => {
+    try {
+      const cardId = req.query.id;
+      if (!cardId) {
+        return res.status(400).send("Card ID is required");
+      }
+  
+      const query = `
+        SELECT cardid, card_name, card_position, card_company, card_description, card_contact, tagname
+        FROM "ByteCard".card
+        JOIN "ByteCard".tag
+        ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
+        WHERE "ByteCard".card.cardid = $1
+      `;
+      const result = await client.query(query, [cardId]);
+  
+      if (result.rows.length === 0) {
+        return res.status(404).send("Card not found");
+      }
+  
+      const card = result.rows[0];
+  
+      // Generate the logo URL using the company name
+      const logoUrl = `https://img.logo.dev/${encodeURIComponent(card.card_company)}.com?token=pk_Juu8uvxFS8GChJyDrMDTtA`;
+  
+      // Generate the QR code for the card details URL
+      const cardUrl = `${req.protocol}://${req.get('host')}/carddetail?id=${cardId}`;
+      const qrCodeDataUrl = await QRCode.toDataURL(cardUrl);
+  
+      // Render the page with QR code data
+      res.render("carddetail", { card, logoUrl, qrCodeDataUrl, user: req.session.user });
+    } catch (error) {
+      console.error("Error fetching card details:", error);
+      res.status(500).send("Server error");
     }
-
-    const query = `
-      SELECT cardid, card_name, card_position, card_company, card_description,card_contact, tagname
-      FROM "ByteCard".card
-      JOIN "ByteCard".tag
-      ON "ByteCard".card.tag_tagid = "ByteCard".tag.tagid
-      WHERE "ByteCard".card.cardid = $1
-    `;
-    const result = await client.query(query, [cardId]);
-
-    if (result.rows.length === 0) {
-      return res.status(404).send("Card not found");
-    }
-
-    const card = result.rows[0];
-
-    // Generate the logo URL using the company name form API
-    const logoUrl = `https://img.logo.dev/${encodeURIComponent(card.card_company)}.com?token=pk_Juu8uvxFS8GChJyDrMDTtA`;
-
-    res.render("carddetail", { card, logoUrl, user: req.session.user });
-  } catch (error) {
-    console.error("Error fetching card details:", error);
-    res.status(500).send("Server error");
-  }
-});
+  });
 
 app.route("/forgot-password")
   .get((req, res) => {
