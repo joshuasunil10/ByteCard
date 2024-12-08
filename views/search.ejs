@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/search.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/search.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    
-    <title>Search Results</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <title>Search Results</title>
+  <!-- Allows for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script> 
 
 </head>
+
 <body id="search-page">
 
   <header class="header">
@@ -26,19 +31,15 @@
         <a href="/login" class="nav-link">Login</a>
       <% } %>
     </nav>
+
   </header>
 
 
   <div class="container">
     <div class="search_text">Search for ByteCards</div>
     <form action="/search" method="POST">
-      <input 
-        type="text" 
-        class="search-input" 
-        name="query" 
-        placeholder="Enter search query..." 
-      />
-      
+      <input type="text" class="search-input" name="query" placeholder="Enter search query..." />
+
       <div class="search-by-container">
         <label for="column" class="search-by-label"></label>
         <select name="column" id="column" class="search-by-select" required>
@@ -49,40 +50,45 @@
         </select>
         <button type="submit" class="btn">Search</button>
       </div>
-      
-      
+
     </form>
-    
-  
-    
+
     <div class="results-container">
       <ul class="search-results">
-        <% if (cards && cards.length > 0) { %>
+        <% if (cards && cards.length> 0) { %>
           <% cards.forEach(function(card) { %>
             <li class="card-shell">
               <div class="card" data-id="<%= card.cardid %>">
                 <a href="/carddetail?id=<%= card.cardid %>" class="card-link">
                   <div class="card-header">
-                    <span class="card-name"><%= card.card_name %></span>
+                    <span class="card-name">
+                      <%= card.card_name %>
+                    </span>
                     <span class="card-brand">ByteCard</span>
                   </div>
                   <div class="card-body">
-                    <div class="card-position"><%= card.card_position %></div>
+                    <div class="card-position">
+                      <%= card.card_position %>
+                    </div>
                   </div>
                   <div class="card-footer">
-                    <span class="company-name"><%= card.card_company %></span>
-                    <span class="card-industry"><%= card.tagname %></span>
+                    <span class="company-name">
+                      <%= card.card_company %>
+                    </span>
+                    <span class="card-industry">
+                      <%= card.tagname %>
+                    </span>
                   </div>
                 </a>
               </div>
             </li>
-          <% }); %>
-        <% } else { %>
-          <li>No results found.</li>
-        <% } %>
+            <% }); %>
+              <% } else { %>
+                <li>No results found.</li>
+                <% } %>
       </ul>
     </div>
-    
+
   </div>
   <footer class="footer">
     ByteCard - 2024 <br> Cian Anderson & Joshua Sunil Mathew
@@ -98,19 +104,11 @@
           opacity: [0, 1],
           scale: [0.8, 1],
           duration: 500,
-          easing: "easeOutQuad", 
+          easing: "easeOutQuad",
           delay: anime.stagger(200),
         });
       }
-  
-      // Remove all existing cards with animation
-      function removeExistingCards() {
-        const existingCards = document.querySelectorAll(".card-shell");
-        existingCards.forEach((card) => {
-          animateCardRemoval(card, () => card.remove());
-        });
-      }
-    
+      
       // Add hover animations
       function addHoverAnimations(card) {
         card.addEventListener("mouseenter", () => {
@@ -121,7 +119,7 @@
             easing: "easeOutQuad"
           });
         });
-  
+
         card.addEventListener("mouseleave", () => {
           anime({
             targets: card,
@@ -131,13 +129,13 @@
           });
         });
       }
-  
+
       // Add animations to existing cards
       const cards = document.querySelectorAll(".card");
       if (cards.length > 0) {
-        animateNewCardsSequentially(cards); // Apply sequential animation to all cards
+        animateNewCardsSequentially(cards);
         cards.forEach((card) => {
-          addHoverAnimations(card); // Add hover effect for each card
+          addHoverAnimations(card);
         });
       }
 
@@ -154,6 +152,5 @@
   
 
 </body>
+
 </html>
-
-
