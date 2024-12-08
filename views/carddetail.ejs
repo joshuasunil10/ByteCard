@@ -7,18 +7,20 @@
     <title>Card Details</title>
 </head>
 <body>
-    <header class="header">
-      <a class="logo" href="/"><div>ByteCard</div></a>
-      <nav class="nav">
-          <a href="/search" class="nav-link">Discover</a>
-          <% if (user) { %>
-              <a href="/dashboard" class="nav-link">Welcome, <%= user.name %></a>
-              <a href="/logout" class="nav-link">Logout</a>
-          <% } else { %>
-              <a href="/login" class="nav-link">Login</a>
-          <% } %>
-      </nav>
+  <header class="header">
+    <a class="logo" href="/"><div>ByteCard</div></a>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <nav class="nav">
+      <a href="/search" class="nav-link">Discover</a>
+      <% if (user) { %>
+        <a href="/dashboard" class="nav-link">User: <%= user.name %></a>
+        <a href="/logout" class="nav-link">Logout</a>
+      <% } else { %>
+        <a href="/login" class="nav-link">Login</a>
+      <% } %>
+    </nav>
   </header>
+
 
     <div class="main">
         <div class="details-container">
@@ -61,4 +63,11 @@
     </footer>
     
 </body>
+
+<script>
+  function toggleMenu() {
+    const nav = document.querySelector('.nav');
+    nav.classList.toggle('open');
+  }
+</script>
 </html>

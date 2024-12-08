@@ -16,6 +16,7 @@
   <body>
     <header class="header">
       <a class="logo" href="/"><div>ByteCard</div></a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <nav class="nav">
         <a href="/search" class="nav-link">Discover</a>
         <% if (user) { %>
@@ -26,6 +27,7 @@
         <% } %>
       </nav>
     </header>
+  
 
     <main class="main-container">
       <h1>Welcome, <span class="text"><%= user.name %>!</span></h1>
@@ -175,6 +177,12 @@
           });
         });
       });
+    </script>
+    <script>
+      function toggleMenu() {
+        const nav = document.querySelector('.nav');
+        nav.classList.toggle('open');
+      }
     </script>
   </body>
 </html>

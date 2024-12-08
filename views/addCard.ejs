@@ -16,16 +16,18 @@
   <body>
     <header class="header">
       <a class="logo" href="/"><div>ByteCard</div></a>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
       <nav class="nav">
         <a href="/search" class="nav-link">Discover</a>
         <% if (user) { %>
-          <a href="/dashboard"><span class="nav-link">Welcome, <%= user.name %></span></a>
+          <a href="/dashboard" class="nav-link">User: <%= user.name %></a>
           <a href="/logout" class="nav-link">Logout</a>
         <% } else { %>
           <a href="/login" class="nav-link">Login</a>
         <% } %>
       </nav>
     </header>
+  
     <div>
       <form action="/createByteCard" method="POST">
         <h2>Create your ByteCard</h2>
@@ -68,4 +70,10 @@
       </form>
     </div>
   </body>
+  <script>
+    function toggleMenu() {
+      const nav = document.querySelector('.nav');
+      nav.classList.toggle('open');
+    }
+  </script>
 </html>

@@ -10,6 +10,7 @@
 .header {
     display: flex;
     justify-content: space-between; /* Space between logo and nav links */
+    align-items: center;
     padding: 1rem 2rem;
     background-color: var(--darker-background-color);
     color: white;
@@ -35,8 +36,8 @@
     text-decoration: none;
     display: flex;
     margin: 0;
-    align-items: center; /* Vertically center within the header */
-    height: 100%; /* Ensure it spans the full height of the header */
+    align-items: center;
+    height: 100%; 
 }
 
 .logo:hover {
@@ -46,25 +47,50 @@
 
 /* Navigation Styling */
 .nav {
-    display: flex;
-    justify-content: flex-end; /* Align links to the right */
+    display: flex; /* By default, display links horizontally */
+    justify-content: flex-end;
     gap: 1rem;
-    width: 100%;
+    align-items: center;
 }
 
+/* Navigation Links */
 .nav-link {
     color: var(--primary-color);
     text-decoration: none;
     font-weight: bold;
-    display: flex; /* Ensure proper alignment */
-    align-items: center; /* Vertically center text in nav links */
+    transition: color 0.3s ease;
 }
 
 .nav-link:hover {
     color: var(--secondary-color);
 }
 
-/* Footer */
+/* Hamburger Menu for smaller screens */
+.hamburger {
+    display: none; /* Initially hidden */
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+/* Hidden by default for mobile, shown when hamburger is clicked */
+.nav {
+    display: flex; /* Default for large screens */
+}
+
+.nav.open {
+    display: flex; /* Show on toggle for mobile */
+    flex-direction: column;
+    background-color: var(--darker-background-color);
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
 .footer {
     background-color: var(--darker-background-color);
     color: white;
@@ -74,23 +100,26 @@
     width: 100%;
 }
 
-/* Responsive Styling */
+
+/* Responsive Styling for Mobile */
 @media (max-width: 768px) {
     .header {
-        padding: 1rem;
-        font-size: clamp(0.4rem, 3vw, 1.2rem);
         flex-wrap: wrap; /* Allow wrapping for smaller screens */
     }
 
-    .nav {
-        justify-content: center;
-        flex-wrap: wrap; /* Wrap links if they overflow */
-        gap: 0.5rem;
-        width: 70%;
+    /* Display hamburger icon */
+    .hamburger {
+        display: block;
     }
 
-    .logo {
-        font-size: clamp(1.3rem, 3vw, 1.8rem);
-        justify-content: center;
+    /* Make nav a vertical column on small screens */
+    .nav {
+        display: none; /* Hide by default on mobile */
+        flex-direction: column;
+        width: 100%; /* Take full width */
+    }
+
+    .nav.open {
+        display: flex; /* Display when hamburger is clicked */
     }
 }
