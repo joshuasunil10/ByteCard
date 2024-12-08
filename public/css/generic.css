@@ -9,7 +9,7 @@
 /* Header Styling */
 .header {
     display: flex;
-    justify-content: space-between; /* Space between logo and nav links */
+    justify-content: space-between;
     padding: 1rem 2rem;
     background-color: var(--darker-background-color);
     color: white;
@@ -34,8 +34,8 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     text-decoration: none;
     display: flex;
-    align-items: center; /* Vertically center within the header */
-    height: 100%; /* Ensure it spans the full height of the header */
+    align-items: center;
+    height: 100%;
 }
 
 .logo:hover {
@@ -46,17 +46,19 @@
 /* Navigation Styling */
 .nav {
     display: flex;
-    justify-content: flex-end; /* Align links to the right */
+    justify-content: flex-end;
     gap: 1rem;
     width: 100%;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 .nav-link {
     color: var(--primary-color);
-    text-decoration: none;
     font-weight: bold;
-    display: flex; /* Ensure proper alignment */
-    align-items: center; /* Vertically center text in nav links */
 }
 
 .nav-link:hover {
@@ -78,12 +80,12 @@
     .header {
         padding: 1rem;
         font-size: clamp(0.4rem, 3vw, 1.2rem);
-        flex-wrap: wrap; /* Allow wrapping for smaller screens */
+        flex-wrap: wrap;
     }
 
     .nav {
-        justify-content: flex-end; /* Align links to the right */
-        flex-wrap: wrap; /* Wrap links if they overflow */
+        justify-content: flex-end; 
+        flex-wrap: wrap;
         gap: 0.5rem;
         width: 70%;
     }
