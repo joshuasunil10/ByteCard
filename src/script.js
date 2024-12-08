@@ -132,29 +132,6 @@ createCardForm.addEventListener("submit", async (e) => {
     }
 });
 
-// Modal elements
-const shareButton = document.getElementById("shareButton");
-const qrCodeModal = document.getElementById("qrCodeModal");
-const closeModalButton = document.getElementById("closeModalButton");
-
-// Show the QR code modal
-shareButton.addEventListener("click", () => {
-    qrCodeModal.style.display = "flex"; // Display the modal
-});
-
-// Hide the QR code modal
-closeModalButton.addEventListener("click", () => {
-    qrCodeModal.style.display = "none"; // Hide the modal
-});
-
-// Close the modal if the user clicks outside the modal content
-window.addEventListener("click", (event) => {
-    if (event.target === qrCodeModal) {
-        qrCodeModal.style.display = "none"; // Hide the modal
-    }
-});
-
-
 
 
 

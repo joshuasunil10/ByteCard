@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/carddetail.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Details</title>
+    <script src="./src/script.js"></script>
 </head>
 <body>
   <header class="header">
@@ -23,19 +24,8 @@
 
 
     <div class="main">
-      <div class="card-actions">
-        <!-- Share Button -->
-        <button id="shareButton" class="share-btn">Share</button>
-    </div>
-    
-    <!-- QR Code Modal -->
-    <div id="qrCodeModal" class="modal">
-        <div class="modal-content">
-            <h2>Scan to Share</h2>
-            <img src="<%= qrCodeDataUrl %>" alt="QR Code">
-            <button id="closeModalButton" class="close-modal-btn">Close</button>
-        </div>
-    </div>
+      
+        <!-- Card details -->
         <div class="details-container">
             <div class="card-detail">
                 <h1 class="card-title"><%= card.card_name %></h1>
@@ -69,6 +59,21 @@
                   
             </div>
         </div>
+        
+      <div class="card-actions">
+        <!-- Share Button -->
+        <button id="shareButton" class="share-btn">Share</button>
+      </div>
+    
+      <!-- QR Code Modal -->
+      <div id="qrCodeModal" class="modal">
+        <div class="modal-content">
+            <h2>Scan to Share</h2>
+            <img src="<%= qrCodeDataUrl %>" alt="QR Code">
+            <button id="closeModalButton" class="close-modal-btn">Close</button>
+        </div>
+      </div>  
+
     </div>
 
     
@@ -79,5 +84,27 @@
     const nav = document.querySelector('.nav');
     nav.classList.toggle('open');
   }
+
+  // script for QR code
+  document.addEventListener("DOMContentLoaded", () => {
+    const shareButton = document.getElementById("shareButton");
+    const qrCodeModal = document.getElementById("qrCodeModal");
+    const closeModalButton = document.getElementById("closeModalButton");
+
+    shareButton.addEventListener("click", () => {
+        qrCodeModal.style.display = "flex";
+    });
+
+    closeModalButton.addEventListener("click", () => {
+        qrCodeModal.style.display = "none";
+    });
+
+    window.addEventListener("click", (event) => {
+        if (event.target === qrCodeModal) {
+            qrCodeModal.style.display = "none";
+        }
+    });
+  });
+
 </script>
 </html>

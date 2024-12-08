@@ -18,6 +18,7 @@ body {
 
 .main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   background-color: var(--background-color);
   max-height: 100vh;
@@ -116,4 +117,109 @@ body {
   margin-top: 0.5rem;
   text-decoration: underline;
   cursor: pointer;
+}
+
+
+
+/* Share Button */
+.share-btn {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.share-btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Slightly darker overlay for better contrast */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Softer shadow for better depth */
+  animation: fadeIn 0.3s ease-in-out; /* Subtle animation */
+}
+
+/* Header Styling */
+.modal-content h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: var(--primary-color); /* Use a primary color for better branding */
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* QR Code Image */
+.modal-content img {
+  max-width: 80%;
+  height: auto;
+  border: 3px solid var(--primary-color); /* Slightly thicker border for emphasis */
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease; /* Add hover effect */
+}
+
+.modal-content img:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Close Button Styling */
+.close-modal-btn {
+  background-color: var(--primary-color);
+  color: #000000;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal-btn:hover {
+  background-color: var(--secondary-color); /* Swap primary and secondary colors */
+  color: #ffffff;
+  transform: translateY(-3px); /* Lift effect on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Add a fade-in effect for the modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
