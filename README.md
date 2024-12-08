@@ -25,4 +25,10 @@
 ### Prerequisites  
 Ensure your environment meets the following requirements before proceeding with installation:  
 - **Node.js** (v16 or higher)  
-- **PostgreSQL** (for database integration)  
+- **PostgreSQL** (for database integration)
+- - **Dbeaver or equivalent** (for databases)
+
+npm install all dependencies in package.json
+and 
+run node /src/index.js
+
