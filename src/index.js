@@ -27,7 +27,7 @@ const client = new Client({
   host: "localhost",
   database: "postgres",
   password: "1234",
-  port: 5432,
+  port: 54321,
 });
 
 client.connect()
@@ -51,7 +51,7 @@ app.get("/", (req, res) => {
 
 app.get("/dashboard", requireLogin, async (req, res) => {
   try {
-    const result = await client.query('SELECT c.card_name, c.card_position, c.card_company, t.tagname FROM "ByteCard".card c JOIN "ByteCard".tag t ON c.tag_tagid = t.tagid WHERE c.user_userid = $1', [req.session.user.id]);
+    const result = await client.query('SELECT c.cardid, c.card_name, c.card_position, c.card_company, t.tagname FROM "ByteCard".card c JOIN "ByteCard".tag t ON c.tag_tagid = t.tagid WHERE c.user_userid = $1', [req.session.user.id]);
     const cards = result.rows;
     res.render("dashboard", { user: req.session.user, cards });
   } catch (error) {
@@ -370,9 +370,10 @@ app.route("/forgot-password")
 
   app.post("/deletecard", requireLogin, async (req, res) => {
     const { cardId } = req.body;
-  
+    console.log("Received cardId:", cardId);
+    const userId = req.session.user.id;
     try {
-      const userId = req.session.user.id;
+      
   
       // Verify card ownership
       const { rows } = await client.query(
