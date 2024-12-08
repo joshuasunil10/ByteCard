@@ -149,7 +149,7 @@ body {
     padding: 20px;
     background-color: #232323;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgb(255, 0, 0);
+    box-shadow: 0 0 10px var(--secondary-color);
     display: flex;
     flex-direction: column; /* Ensures form content is stacked */
     align-items: stretch; /* Aligns content within the form */
