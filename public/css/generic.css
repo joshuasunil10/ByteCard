@@ -118,7 +118,14 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-
+.footer {
+    background-color: var(--darker-background-color);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    bottom: 0;
+    width: 100%;
+}
 
 
 
